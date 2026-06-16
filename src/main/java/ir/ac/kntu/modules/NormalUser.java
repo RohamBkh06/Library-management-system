@@ -1,6 +1,6 @@
 package ir.ac.kntu.modules;
 
-import java.util.List;
+import java.util.Map;
 
 public abstract class NormalUser {
     private String firstName;
@@ -10,7 +10,7 @@ public abstract class NormalUser {
     private String phoneNum;
     private String password;
     private Wallet wallet;
-    private List<Borrowed> borrowedList;
+    private Map<String, Borrowed> borrowedList;
 
     public abstract int getBorrowLimit();
 }

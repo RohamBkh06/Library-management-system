@@ -5,7 +5,7 @@ import ir.ac.kntu.modules.Borrowed;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
-public class FineCalculator {
+public final class FineCalculator {
     private final static double BASERATE = 50_000;
     private final static double DAILYFINE = 10_000;
 

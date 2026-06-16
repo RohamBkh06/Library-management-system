@@ -2,8 +2,8 @@ package ir.ac.kntu.modules;
 
 import ir.ac.kntu.util.FineCalculator;
 import ir.ac.kntu.util.IdGenerator;
-
 import java.time.LocalDate;
+
 
 public class Fine {
     private final String id;

@@ -11,6 +11,10 @@ public class Borrowed {
     private boolean isReturned;
     private Fine fine;
 
+    public String getId() {
+        return id;
+    }
+
     private boolean extendBorrowTime(long daysToExtend){
         if (fine.isPaid()){
             borrowDate.plusDays(daysToExtend);

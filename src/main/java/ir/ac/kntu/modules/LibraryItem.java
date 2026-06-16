@@ -8,6 +8,10 @@ public abstract class LibraryItem {
     private int publishYear;
     private String category;
 
+    public String getId() {
+        return id;
+    }
+
     protected LibraryItem(String title, String id, int publishYear, String category){
         if (Validator.isValidItemId(id)){
             this.id = id;
