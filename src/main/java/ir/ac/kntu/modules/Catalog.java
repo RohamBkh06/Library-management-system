@@ -1,19 +1,17 @@
 package ir.ac.kntu.modules;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.function.Predicate;
 
 public class Catalog {
     private static Catalog instance;
     private final List<LibraryItem> items;
-    private final Map<String, LibraryItem> itemsById;
+    private final Map<String, LibraryItem> itemsByTitle;
 
 
     private Catalog(){
         this.items = new ArrayList<>();
-        this.itemsById = new HashMap<>();
+        this.itemsByTitle = new HashMap<>();
     }
 
     public Catalog getInstance(){
@@ -25,14 +23,30 @@ public class Catalog {
 
     public void addItem(LibraryItem item){
         this.items.add(item);
-        this.itemsById.put(item.getId(), item);
+        this.itemsByTitle.put(item.getTitle(), item);
     }
 
     public List<LibraryItem> getItems(){
         return new ArrayList<>(this.items);
     }
 
-    public LibraryItem getItemById(String id){
-        return this.itemsById.get(id);
+    public List<LibraryItem> getItemByTitle(String title){
+        List<LibraryItem> ans = new ArrayList<>();
+        for (String s : itemsByTitle.keySet()) {
+            if (s.contains(title)){
+                ans.add(this.itemsByTitle.get(s));
+            }
+        }
+        return ans;
+    }
+
+    public List<LibraryItem> filteredSearch(Predicate<LibraryItem> predicate){
+        List<LibraryItem> ans = new ArrayList<>();
+        for (LibraryItem item : items) {
+            if (predicate.test(item)){
+                ans.add(item);
+            }
+        }
+        return ans;
     }
 }

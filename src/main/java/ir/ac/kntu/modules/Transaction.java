@@ -25,6 +25,7 @@ public class Transaction {
                 break;
             default:
                 this.description = "Not a valid transaction";
+                break;
 
         }
     }
