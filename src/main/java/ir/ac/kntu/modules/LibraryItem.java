@@ -17,14 +17,23 @@ public abstract class LibraryItem {
     }
 
     protected LibraryItem(String title, String id, int publishYear, String category){
-        if (Validator.isValidItemId(id)){
-            this.id = id;
-        }
-        if (Validator.isValidPublishYear(publishYear)){
-            this.publishYear = publishYear;
-        }
+        setId(id);
+        setPublishYear(publishYear);
         this.title = title;
         this.category = category;
     }
 
+    public void setId(String id) {
+        if (!Validator.isValidItemId(id)){
+            throw new IllegalArgumentException("Invalid Id");
+        }
+        this.id = id;
+    }
+
+    public void setPublishYear(int publishYear) {
+        if (!Validator.isValidPublishYear(publishYear)){
+            throw new IllegalArgumentException("PublishYear out of bound");
+        }
+        this.publishYear = publishYear;
+    }
 }

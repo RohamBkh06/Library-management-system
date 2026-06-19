@@ -2,6 +2,8 @@ package ir.ac.kntu.modules;
 
 import ir.ac.kntu.util.Validator;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +20,19 @@ public abstract class NormalUser {
 
     public abstract int getBorrowLimit();
 
+    protected NormalUser(String firstName, String lastName, String id, String email, String phoneNum,String password){
+        setId(id);
+        setEmail(email);
+        setPhoneNum(phoneNum);
+        setPassword(password);
+        this.setFirstName(firstName);
+        this.setLastName(lastName);
+        this.wallet = new Wallet();
+        this.borrowedList = new HashMap<>();
+        this.ticketList = new ArrayList<>();
+
+    }
+
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
@@ -26,35 +41,32 @@ public abstract class NormalUser {
         this.lastName = lastName;
     }
 
-    public boolean setId(String id) {
-        if (Validator.isValidMemberId(id)){
-            this.id = id;
-            return true;
+    public void setId(String id) {
+        if (!Validator.isValidMemberId(id)){
+            throw new IllegalArgumentException("Invalid Id.");
+
         }
-        return false;
+        this.id = id;
     }
 
-    public boolean setEmail(String email) {
-        if (Validator.isValidEmail(email)){
-            this.email = email;
-            return true;
+    public void setEmail(String email) {
+        if (!Validator.isValidEmail(email)){
+            throw new IllegalArgumentException("Invalid Email.");
         }
-        return false;
+        this.email = email;
     }
 
-    public boolean setPhoneNum(String phoneNum) {
-        if (Validator.isValidPhoneNum(phoneNum)){
-            this.phoneNum = phoneNum;
-            return true;
+    public void setPhoneNum(String phoneNum) {
+        if (!Validator.isValidPhoneNum(phoneNum)){
+            throw new IllegalArgumentException("Invalid Phone number.");
         }
-        return false;
+        this.phoneNum = phoneNum;
     }
 
-    public boolean setPassword(String password) {
-        if (Validator.isValidPassword(password)){
+    public void setPassword(String password) {
+        if (!Validator.isValidPassword(password)){
+            throw new IllegalArgumentException("Password is weak.");
+        }
             this.password = password;
-            return true;
-        }
-        return false;
     }
 }

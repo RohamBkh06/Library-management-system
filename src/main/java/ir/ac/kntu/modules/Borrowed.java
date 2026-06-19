@@ -1,5 +1,7 @@
 package ir.ac.kntu.modules;
 
+import ir.ac.kntu.util.IdGenerator;
+
 import java.time.LocalDate;
 
 public class Borrowed {
@@ -13,6 +15,16 @@ public class Borrowed {
 
     public String getId() {
         return id;
+    }
+
+    public Borrowed(LibraryItem item, NormalUser borrower) {
+        this.item = item;
+        this.borrower = borrower;
+        this.id = IdGenerator.generateBorrowedId();
+        this.borrowDate = LocalDate.now();
+        this.returnDueDate = this.borrowDate.plusDays(14L);
+        this.isReturned = false;
+        this.fine = new Fine(this);
     }
 
     private boolean extendBorrowTime(long daysToExtend){
