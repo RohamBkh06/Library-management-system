@@ -18,7 +18,9 @@ public abstract class NormalUser {
     private Map<String, Borrowed> borrowedList;
     private List<SupportTicket> ticketList;
 
-    public abstract int getBorrowLimit();
+    protected abstract int getBorrowLimit();
+
+    protected abstract void borrow();
 
     protected NormalUser(String firstName, String lastName, String id, String email, String phoneNum,String password){
         setId(id);
@@ -68,5 +70,27 @@ public abstract class NormalUser {
             throw new IllegalArgumentException("Password is weak.");
         }
             this.password = password;
+    }
+
+    public List<Fine> getFines(){
+        List<Fine> ans = new ArrayList<>();
+        for (Borrowed item : this.borrowedList.values()) {
+            if (!item.getFine().isPaid()){
+                ans.add(item.getFine());
+            }
+        }
+        return ans;
+    }
+
+    public Wallet getWallet() {
+        return wallet;
+    }
+
+    public Map<String, Borrowed> getBorrowedList() {
+        return borrowedList;
+    }
+
+    public void requestSupport(String message, TicketType type){
+        this.ticketList.add(new SupportTicket(type, message));
     }
 }

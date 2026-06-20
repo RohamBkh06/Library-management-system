@@ -8,6 +8,8 @@ public abstract class LibraryItem {
     private int publishYear;
     private String category;
 
+    protected abstract boolean lend();
+
     public String getId() {
         return id;
     }

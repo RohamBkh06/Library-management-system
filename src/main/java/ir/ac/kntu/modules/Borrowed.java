@@ -27,6 +27,10 @@ public class Borrowed {
         this.fine = new Fine(this);
     }
 
+    public Fine getFine() {
+        return fine;
+    }
+
     private boolean extendBorrowTime(long daysToExtend){
         if (fine.isPaid()){
             borrowDate.plusDays(daysToExtend);

@@ -11,6 +11,8 @@ public final class Validator {
     private final static Pattern MEMBERID_PATTERN = Pattern.compile("(?:GST|STU|FAC)-\\d{6}");
     private final static Pattern PHONENUM_PATTERN = Pattern.compile("(?:0|\\+98|98)\\d{10}");
     private final static Pattern PASSWORD_PATTERN = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*]).{8,}$");
+    private final static Pattern URL_PATTERN = Pattern.compile("^https://.*");
+
 
     public static boolean isValidItemId(String id){
         return ITEMID_PATTERN.matcher(id).matches();
@@ -35,4 +37,9 @@ public final class Validator {
     public static boolean isValidEmail(String email) {
         return EMAIL_PATTERN.matcher(email).matches();
     }
+
+    public static boolean isValidUrl(String email) {
+        return URL_PATTERN.matcher(email).matches();
+    }
+
 }
