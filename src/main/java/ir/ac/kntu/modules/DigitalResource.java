@@ -25,7 +25,7 @@ public abstract class DigitalResource extends LibraryItem {
     }
 
     @Override
-    protected boolean isAvailable() {
+    protected boolean lend() {
         return true;
     }
 }

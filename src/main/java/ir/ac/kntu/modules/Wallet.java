@@ -22,6 +22,9 @@ public class Wallet {
     }
 
     public void withdraw(double amount){
+        if (amount > this.balance){
+            throw new IllegalStateException("Insufficient balance");
+        }
         this.balance -= amount;
     }
 

@@ -10,9 +10,4 @@ public class Faculty extends NormalUser{
     public int getBorrowLimit() {
         return 10;
     }
-
-    @Override
-    public void borrow() {
-
-    }
 }

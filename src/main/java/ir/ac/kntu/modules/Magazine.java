@@ -22,7 +22,11 @@ public class Magazine extends LibraryItem{
     }
 
     @Override
-    protected boolean isAvailable() {
-        return availableCopies > 0;
+    protected boolean lend() {
+        if (availableCopies > 0){
+            availableCopies--;
+            return true;
+        }
+        return false;
     }
 }

@@ -1,10 +1,12 @@
 package ir.ac.kntu.main;
 
+import ir.ac.kntu.modules.Borrowed;
+import ir.ac.kntu.modules.Fine;
 import ir.ac.kntu.modules.NormalUser;
-import ir.ac.kntu.modules.SupportTicket;
 import ir.ac.kntu.modules.Supporter;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class LibraryManger {
@@ -25,7 +27,21 @@ public class LibraryManger {
         return instance;
     }
 
-    public void answer(SupportTicket ticket, String message){
-        ticket.setAnswer(message);
+    public List<Borrowed> getRecentBorrows(){
+        List<Borrowed> ans = new ArrayList<>();
+        for (NormalUser normalUser : userList) {
+            ans.addAll(normalUser.getBorrowedList());
+        }
+        ans.sort(Comparator.comparing(Borrowed::getBorrowDate).reversed());
+        return ans;
+    }
+
+    public List<Fine> getAllFines(){
+        List<Fine> ans = new ArrayList<>();
+        for (NormalUser normalUser : userList) {
+            ans.addAll(normalUser.getFines());
+        }
+        ans.sort(Comparator.comparing(Fine::getAmount));
+        return ans;
     }
 }

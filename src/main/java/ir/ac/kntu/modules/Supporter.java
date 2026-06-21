@@ -15,4 +15,8 @@ public class Supporter{
         Catalog catalog = Catalog.getInstance();
         catalog.addItem(item);
     }
+
+    public void answer(SupportTicket ticket, String message){
+        ticket.setAnswer(message);
+    }
 }

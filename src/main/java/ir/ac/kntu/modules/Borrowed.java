@@ -17,6 +17,18 @@ public class Borrowed {
         return id;
     }
 
+    public LibraryItem getItem() {
+        return item;
+    }
+
+    public void returnBorrow(){
+        this.isReturned = true;
+    }
+
+    public boolean isReturned() {
+        return isReturned;
+    }
+
     public Borrowed(LibraryItem item, NormalUser borrower) {
         this.item = item;
         this.borrower = borrower;

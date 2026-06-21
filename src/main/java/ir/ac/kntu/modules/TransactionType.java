@@ -1,5 +1,5 @@
 package ir.ac.kntu.modules;
 
 public enum TransactionType {
-    FINE_PAYMENT,PURCHASE;
+    FINE_PAYMENT, CHARGE;
 }

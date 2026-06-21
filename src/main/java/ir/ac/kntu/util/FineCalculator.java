@@ -13,7 +13,12 @@ public final class FineCalculator {
 
     public static double calculate(Borrowed borrowed) {
         double ans = 0;
-        long delay = ChronoUnit.DAYS.between(borrowed.getReturnDueDate(), LocalDate.now());
+        long delay;
+        if (borrowed.getFine().getPaymentDate() == null){
+        delay = ChronoUnit.DAYS.between(borrowed.getReturnDueDate(), LocalDate.now());
+        } else {
+            delay = ChronoUnit.DAYS.between(borrowed.getReturnDueDate(), borrowed.getFine().getPaymentDate());
+        }
         if (delay > 0) {
             ans = BASERATE;
         }

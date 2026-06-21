@@ -11,8 +11,4 @@ public class Student extends NormalUser{
         return 5;
     }
 
-    @Override
-    public void borrow() {
-
-    }
 }

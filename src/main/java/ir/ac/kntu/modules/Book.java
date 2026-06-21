@@ -24,7 +24,13 @@ public class Book extends LibraryItem{
     }
 
     @Override
-    protected boolean isAvailable() {
-        return this.availableCopies > 0;
+    protected boolean lend() {
+        if (availableCopies > 0){
+            availableCopies--;
+            return true;
+        }
+        return false;
     }
+
+
 }

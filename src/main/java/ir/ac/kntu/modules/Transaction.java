@@ -16,18 +16,7 @@ public class Transaction {
         this.amount = amount;
         this.type = type;
         this.issueDate = LocalDate.now();
-        switch (type){
-            case FINE_PAYMENT:
-                this.description = "Payment of fine with id: "+id;
-                break;
-            case PURCHASE:
-                this.description = "Purchase made for loan with id: "+id;
-                break;
-            default:
-                this.description = "Not a valid transaction";
-                break;
-
-        }
+        this.description = "Payment of fine with id: " + id;
     }
 
     public Transaction(double amount, TransactionType type){

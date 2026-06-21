@@ -14,6 +14,7 @@ public class Fine {
     public Fine(Borrowed borrowedItem){
         this.borrowedItem = borrowedItem;
         this.id = IdGenerator.generateFineId();
+        this.paid = false;
     }
 
     public String getId() {
@@ -28,14 +29,12 @@ public class Fine {
         return paid;
     }
 
-    public boolean pay(){
+    public void pay(){
         if (this.isPaid()){
-            return false;
+            throw new IllegalStateException("fine already paid");
         }
-
         this.paid = true;
         this.paymentDate = LocalDate.now();
-        return true;
     }
 
     public LocalDate getPaymentDate() {
