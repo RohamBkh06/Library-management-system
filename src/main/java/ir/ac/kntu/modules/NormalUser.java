@@ -91,6 +91,6 @@ public abstract class NormalUser {
     }
 
     public void requestSupport(String message, TicketType type){
-        this.ticketList.add(new SupportTicket(type, message));
+        this.ticketList.add(new SupportTicket(this, type, message));
     }
 }

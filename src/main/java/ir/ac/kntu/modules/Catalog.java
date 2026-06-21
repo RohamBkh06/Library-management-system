@@ -14,7 +14,7 @@ public class Catalog {
         this.itemsByTitle = new HashMap<>();
     }
 
-    public Catalog getInstance(){
+    public static Catalog getInstance(){
         if (instance == null){
             instance = new Catalog();
         }

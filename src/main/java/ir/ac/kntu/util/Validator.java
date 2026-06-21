@@ -12,6 +12,8 @@ public final class Validator {
     private final static Pattern PHONENUM_PATTERN = Pattern.compile("(?:0|\\+98|98)\\d{10}");
     private final static Pattern PASSWORD_PATTERN = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*]).{8,}$");
     private final static Pattern URL_PATTERN = Pattern.compile("^https://.*");
+    private final static Pattern ISBN_PATTERN = Pattern.compile("^(?:979|978)\\d{10}");
+    private final static Pattern ISSN_PATTERN = Pattern.compile("^\\d{4}-\\d{3}[\\dX]");
 
 
     public static boolean isValidItemId(String id){
@@ -38,8 +40,16 @@ public final class Validator {
         return EMAIL_PATTERN.matcher(email).matches();
     }
 
-    public static boolean isValidUrl(String email) {
-        return URL_PATTERN.matcher(email).matches();
+    public static boolean isValidUrl(String url) {
+        return URL_PATTERN.matcher(url).matches();
+    }
+
+    public static boolean isValidISBN(String isbn) {
+        return ISBN_PATTERN.matcher(isbn).matches();
+    }
+
+    public static boolean isValidISSN(String issn) {
+        return ISSN_PATTERN.matcher(issn).matches();
     }
 
 }

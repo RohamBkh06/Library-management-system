@@ -8,7 +8,7 @@ public abstract class LibraryItem {
     private int publishYear;
     private String category;
 
-    protected abstract boolean lend();
+    protected abstract boolean isAvailable();
 
     public String getId() {
         return id;
