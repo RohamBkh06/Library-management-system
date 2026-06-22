@@ -19,4 +19,8 @@ public class Supporter{
     public void answer(SupportTicket ticket, String message){
         ticket.setAnswer(message);
     }
+
+    public String getPassword() {
+        return password;
+    }
 }

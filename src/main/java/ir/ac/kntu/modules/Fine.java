@@ -40,4 +40,14 @@ public class Fine {
     public LocalDate getPaymentDate() {
         return paymentDate;
     }
+
+    @Override
+    public String toString() {
+        return "Fine{" +
+                "id='" + id +  
+                ", borrowedItem=" + borrowedItem +
+                ", paid=" + paid +
+                ", paymentDate=" + paymentDate +
+                '}';
+    }
 }

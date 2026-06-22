@@ -56,9 +56,10 @@ public class Wallet {
         return sorted;
     }
 
-
-
-
-
-
+    @Override
+    public String toString() {
+        return "Wallet{" +
+                "balance=" + balance +
+                '}';
+    }
 }

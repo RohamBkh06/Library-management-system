@@ -30,6 +30,10 @@ public class Catalog {
         return new ArrayList<>(this.items);
     }
 
+    public LibraryItem getItem(String title){
+        return itemsByTitle.get(title);
+    }
+
     public List<LibraryItem> getItemByTitle(String title){
         List<LibraryItem> ans = new ArrayList<>();
         for (String s : itemsByTitle.keySet()) {

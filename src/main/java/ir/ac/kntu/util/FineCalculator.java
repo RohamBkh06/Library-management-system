@@ -15,7 +15,7 @@ public final class FineCalculator {
         double ans = 0;
         long delay;
         if (borrowed.getFine().getPaymentDate() == null){
-        delay = ChronoUnit.DAYS.between(borrowed.getReturnDueDate(), LocalDate.now());
+            delay = ChronoUnit.DAYS.between(borrowed.getReturnDueDate(), LocalDate.now());
         } else {
             delay = ChronoUnit.DAYS.between(borrowed.getReturnDueDate(), borrowed.getFine().getPaymentDate());
         }

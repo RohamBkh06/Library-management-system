@@ -38,4 +38,23 @@ public abstract class LibraryItem {
         }
         this.publishYear = publishYear;
     }
+
+    public int getPublishYear() {
+        return publishYear;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+
+
+    @Override
+    public String toString() {
+        return  title + "{" +
+                "id= " + id +
+                ", publishYear= " + publishYear +
+                ", category= " + category +
+                '}';
+    }
 }

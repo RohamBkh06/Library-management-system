@@ -18,7 +18,7 @@ public abstract class NormalUser {
     private Map<String, Borrowed> allBorrows;
     private List<SupportTicket> ticketList;
 
-    protected abstract int getBorrowLimit();
+    public abstract int getBorrowLimit();
 
     public int activeBorrows(){
         int counter = 0;
@@ -94,7 +94,7 @@ public abstract class NormalUser {
         if (!Validator.isValidPassword(password)){
             throw new IllegalArgumentException("Password is weak.");
         }
-            this.password = password;
+        this.password = password;
     }
 
     public List<Fine> getFines(){
@@ -131,4 +131,18 @@ public abstract class NormalUser {
         }
         return false;
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+
 }

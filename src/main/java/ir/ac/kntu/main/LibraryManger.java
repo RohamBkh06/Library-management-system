@@ -1,23 +1,18 @@
 package ir.ac.kntu.main;
 
-import ir.ac.kntu.modules.Borrowed;
-import ir.ac.kntu.modules.Fine;
-import ir.ac.kntu.modules.NormalUser;
-import ir.ac.kntu.modules.Supporter;
+import ir.ac.kntu.modules.*;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class LibraryManger {
     private static LibraryManger instance;
-    private List<NormalUser> userList;
-    private List<Supporter> supporterList;
+    private Map<String, NormalUser> userById;
+    private Map<String, Supporter> supporterByPassword;
 
 
     private LibraryManger(){
-        this.supporterList = new ArrayList<>();
-        this.userList = new ArrayList<>();
+        this.supporterByPassword = new HashMap<>();
+        this.userById = new HashMap<>();
     }
 
     public static LibraryManger getInstance(){
@@ -27,21 +22,42 @@ public class LibraryManger {
         return instance;
     }
 
+    public void addUser(NormalUser user){
+        this.userById.put(user.getId(), user);
+    }
+
+    public void addSupporter(Supporter supporter){
+        this.supporterByPassword.put(supporter.getPassword(), supporter);
+    }
+
     public List<Borrowed> getRecentBorrows(){
         List<Borrowed> ans = new ArrayList<>();
-        for (NormalUser normalUser : userList) {
+        for (NormalUser normalUser : userById.values()) {
             ans.addAll(normalUser.getBorrowedList());
         }
         ans.sort(Comparator.comparing(Borrowed::getBorrowDate).reversed());
-        return ans;
+        return ans.subList(0, 10);
     }
 
     public List<Fine> getAllFines(){
         List<Fine> ans = new ArrayList<>();
-        for (NormalUser normalUser : userList) {
+        for (NormalUser normalUser : userById.values()) {
             ans.addAll(normalUser.getFines());
         }
         ans.sort(Comparator.comparing(Fine::getAmount));
         return ans;
+    }
+
+    public Map<String, NormalUser> getUserById() {
+        return userById;
+    }
+
+    public Supporter loginSupporter(String password) {
+        Supporter supporter = supporterByPassword.get(password);
+        if (supporter == null) {
+            throw new IllegalArgumentException("Wrong password");
+        }
+
+        return supporter;
     }
 }

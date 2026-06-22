@@ -9,7 +9,7 @@ public final class PaymentService {
         fine.pay();
         Transaction transaction = new Transaction(fine.getAmount(), TransactionType.FINE_PAYMENT, fine.getId());
         user.getWallet().addTransaction(transaction);
-        }
+    }
 
     public static void chargeWallet(double amount,NormalUser user){
         user.getWallet().charge(amount);

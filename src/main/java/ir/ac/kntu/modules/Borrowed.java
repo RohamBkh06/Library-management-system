@@ -43,7 +43,7 @@ public class Borrowed {
         return fine;
     }
 
-    private boolean extendBorrowTime(long daysToExtend){
+    public boolean extendBorrowTime(long daysToExtend){
         if (fine.isPaid()){
             borrowDate.plusDays(daysToExtend);
             return true;
@@ -58,5 +58,18 @@ public class Borrowed {
 
     public LocalDate getReturnDueDate() {
         return returnDueDate;
+    }
+
+    @Override
+    public String toString() {
+        return "Borrowed{" +
+                "borrower=" + borrower.getFirstName() +
+                ", id='" + id +
+                ", item=" + item +
+                ", borrowDate=" + borrowDate +
+                ", returnDueDate=" + returnDueDate +
+                ", isReturned=" + isReturned +
+                ", fine=" + fine.getAmount() +
+                '}';
     }
 }
