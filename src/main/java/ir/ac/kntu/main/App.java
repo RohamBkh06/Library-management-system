@@ -3,7 +3,10 @@ package ir.ac.kntu.main;
 import ir.ac.kntu.modules.*;
 import ir.ac.kntu.util.ConsoleStyle;
 import ir.ac.kntu.util.EmailService;
+import ir.ac.kntu.util.HtmlReportGenerator;
 import ir.ac.kntu.util.ScannerWrapper;
+
+import java.io.IOException;
 
 public class App {
 
@@ -28,7 +31,7 @@ public class App {
                     supporterLogin();
                     break;
                 case 3:
-                    ScannerWrapper.close();
+                    finishProgram();
                     return;
                 default:
                     ScannerWrapper.rewritePrompt("Selection out of bound.");
@@ -102,6 +105,16 @@ public class App {
                 System.out.println(ConsoleStyle.RED + e.getMessage() + ConsoleStyle.RESET);
                 ScannerWrapper.pause();
             }
+        }
+    }
+
+    public static void finishProgram(){
+        ScannerWrapper.close();
+        try {
+            HtmlReportGenerator.generateReport("report.html");
+            System.out.println("Report generated successfully.");
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
         }
     }
 }
