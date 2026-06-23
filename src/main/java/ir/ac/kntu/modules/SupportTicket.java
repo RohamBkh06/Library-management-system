@@ -24,5 +24,27 @@ public class SupportTicket {
         isAnswered = true;
     }
 
+    public NormalUser getUser() {
+        return user;
+    }
 
+    public String getId() {
+        return id;
+    }
+
+    public TicketType getType() {
+        return type;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public boolean isAnswered() {
+        return isAnswered;
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
 }

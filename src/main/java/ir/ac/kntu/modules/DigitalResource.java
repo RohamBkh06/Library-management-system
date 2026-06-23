@@ -28,4 +28,20 @@ public abstract class DigitalResource extends LibraryItem {
     protected boolean lend() {
         return true;
     }
+
+    public DigitalFormat getFormat() {
+        return format;
+    }
+
+    public double getSize() {
+        return size;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public int getPageCount() {
+        return pageCount;
+    }
 }

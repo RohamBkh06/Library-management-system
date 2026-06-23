@@ -144,5 +144,23 @@ public abstract class NormalUser {
         return firstName;
     }
 
+    public String getLastName() {
+        return lastName;
+    }
 
+    public String getPhoneNum() {
+        return phoneNum;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public Map<String, Borrowed> getAllBorrows() {
+        return allBorrows;
+    }
+
+    public List<SupportTicket> getTicketList() {
+        return ticketList;
+    }
 }

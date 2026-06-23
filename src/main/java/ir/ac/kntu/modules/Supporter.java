@@ -23,4 +23,12 @@ public class Supporter{
     public String getPassword() {
         return password;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
 }

@@ -49,7 +49,7 @@ public class LibraryManger {
     }
 
     public Map<String, NormalUser> getUserById() {
-        return userById;
+        return new HashMap<>(this.userById);
     }
 
     public Supporter loginSupporter(String password) {

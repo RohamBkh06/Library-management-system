@@ -15,6 +15,6 @@ public final class IdGenerator {
     }
 
     public static String generateTicketId(){
-        return String.format("TCK-%06d", fineNextId++);
+        return String.format("TCK-%06d", ticketNextId++);
     }
 }

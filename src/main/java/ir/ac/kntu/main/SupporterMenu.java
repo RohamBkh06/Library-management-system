@@ -13,11 +13,8 @@ public final class SupporterMenu {
     }
 
     public static void show(Supporter supporter) {
-
         while (true) {
-
             ConsoleStyle.clearScreen();
-
             System.out.println(ConsoleStyle.BOLD + ConsoleStyle.CYAN +
                     "================ SUPPORTER MENU ================\n" +
                     "1. View all users       \n" +
@@ -27,11 +24,8 @@ public final class SupporterMenu {
                     "5. Exit                 \n" +
                     "===============================================" +
                     ConsoleStyle.RESET);
-
             try {
-
                 int choice = ScannerWrapper.nextInt("Select option: ");
-
                 switch (choice) {
                     case 1 -> viewAllUsers();
                     case 2 -> viewRecentBorrows();
@@ -44,7 +38,6 @@ public final class SupporterMenu {
                 }
                 ScannerWrapper.pause();
             } catch (RuntimeException e) {
-
                 System.out.println(ConsoleStyle.RED + e.getMessage() + ConsoleStyle.RESET);
                 ScannerWrapper.pause();
             }
@@ -52,29 +45,19 @@ public final class SupporterMenu {
     }
 
     private static void viewAllUsers() {
-
-        Map<String, NormalUser> users =
-                LibraryManger.getInstance().getUserById();
-
+        Map<String, NormalUser> users = LibraryManger.getInstance().getUserById();
         if (users.isEmpty()) {
             System.out.println("No users found.");
             return;
         }
-
         for (NormalUser user : users.values()) {
-
-            System.out.println(
-                    "ID: " + user.getId()
-                            + " | Active Borrows: " + user.activeBorrows()
-                            + " | Fines: " + user.getFines().size()
-            );
+            System.out.println("ID: " + user.getId() + " | Active Borrows: " + user.activeBorrows() + " | Fines: " + user.getFines().size());
         }
     }
 
     private static void viewRecentBorrows() {
 
-        List<Borrowed> borrows =
-                LibraryManger.getInstance().getRecentBorrows();
+        List<Borrowed> borrows = LibraryManger.getInstance().getRecentBorrows();
 
         if (borrows.isEmpty()) {
             System.out.println("No borrows found.");

@@ -35,4 +35,15 @@ public class Transaction {
                 '}';
     }
 
+    public double getAmount() {
+        return amount;
+    }
+
+    public TransactionType getType() {
+        return type;
+    }
+
+    public String getDescription() {
+        return description;
+    }
 }

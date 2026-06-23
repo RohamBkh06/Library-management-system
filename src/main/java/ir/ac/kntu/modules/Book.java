@@ -6,18 +6,18 @@ public class Book extends LibraryItem{
     private String author;
     private int pageCount;
     private long availableCopies;
-    private String ISBN;
+    private String isbn;
 
-    public void setISBN(String ISBN) {
-        if (!Validator.isValidISBN(ISBN)){
+    public void setIsbn(String isbn) {
+        if (!Validator.isValidISBN(isbn)){
             throw new IllegalArgumentException("Invalid ISBN");
         }
-        this.ISBN = ISBN;
+        this.isbn = isbn;
     }
 
-    public Book(String title, String id, int publishYear, String category, String author, int pageCount, long availableCopies, String ISBN) {
+    public Book(String title, String id, int publishYear, String category, String author, int pageCount, long availableCopies, String isbn) {
         super(title, id, publishYear, category);
-        setISBN(ISBN);
+        setIsbn(isbn);
         this.author = author;
         this.pageCount = pageCount;
         this.availableCopies = availableCopies;
@@ -32,5 +32,19 @@ public class Book extends LibraryItem{
         return false;
     }
 
+    public String getAuthor() {
+        return author;
+    }
 
+    public int getPageCount() {
+        return pageCount;
+    }
+
+    public long getAvailableCopies() {
+        return availableCopies;
+    }
+
+    public String getIsbn() {
+        return isbn;
+    }
 }
