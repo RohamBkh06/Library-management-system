@@ -47,4 +47,9 @@ public class Book extends LibraryItem{
     public String getIsbn() {
         return isbn;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + "Type: Book";
+    }
 }

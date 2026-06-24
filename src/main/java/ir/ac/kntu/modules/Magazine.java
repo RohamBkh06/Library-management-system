@@ -41,4 +41,9 @@ public class Magazine extends LibraryItem{
     public PublicationFrequency getFrequency() {
         return frequency;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + "Type: Magazine";
+    }
 }

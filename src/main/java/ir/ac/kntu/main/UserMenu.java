@@ -24,18 +24,20 @@ public final class UserMenu {
                             "3. See BorrowedItems    \n" +
                             "4. Setting              \n" +
                             "5. Support              \n" +
-                            "6. Return               \n" +
+                            "6. see SupportTickets   \n" +
+                            "7. Return               \n" +
                             ConsoleStyle.RESET
             );
 
             int select = ScannerWrapper.nextInt(selectionString);
             switch (select) {
-                case 1 -> seeLibraryItems();
+                case 1 -> seeLibraryItems(user);
                 case 2 -> seeWallet(user);
                 case 3 -> seeBorrowedItems(user);
                 case 4 -> setting(user);
                 case 5 -> support(user);
-                case 6 -> {
+                case 6 -> seeSupportTickets(user);
+                case 7 -> {
                     return;
                 }
                 default -> {
@@ -46,11 +48,11 @@ public final class UserMenu {
         }
     }
 
-    private static void seeLibraryItems() {
+    private static void seeLibraryItems(NormalUser user) {
         while (true) {
             ConsoleStyle.clearScreen();
             for (LibraryItem item : Catalog.getInstance().getItems()) {
-                System.out.println(item);
+                System.out.println(ConsoleStyle.YELLOW +item+ ConsoleStyle.RESET +"\n");
             }
             System.out.println();
             System.out.println(
@@ -59,8 +61,10 @@ public final class UserMenu {
                             "1. title          \n" +
                             "2. category       \n" +
                             "3. publish year   \n" +
+                            "==================\n" +
+                            "4. borrow an item \n" +
                             "                  \n" +
-                            "4. return         \n" +
+                            "5. return         \n" +
                             ConsoleStyle.RESET
             );
 
@@ -69,8 +73,9 @@ public final class UserMenu {
             switch (select) {
                 case 1 -> filterByTitle();
                 case 2 -> filterByCategory();
-                case 3 -> filterByPubishYear();
-                case 4 -> {
+                case 3 -> filterByPublishYear();
+                case 4 -> borrowItem(user);
+                case 5 -> {
                     return;
                 }
                 default -> {
@@ -102,7 +107,7 @@ public final class UserMenu {
         ScannerWrapper.pause();
     }
 
-    private static void filterByPubishYear() {
+    private static void filterByPublishYear() {
 
         ConsoleStyle.clearScreen();
         int from = ScannerWrapper.nextInt("From Year: ");
@@ -123,7 +128,7 @@ public final class UserMenu {
                     ConsoleStyle.BG_WHITE + ConsoleStyle.BLUE +
                             "Actions:             \n" +
                             "1. Charge wallet     \n" +
-                            "2. see transaction   \n" +
+                            "2. see transactions  \n" +
                             "3. see fines         \n" +
                             "                     \n" +
                             "4. return            \n" +
@@ -135,6 +140,8 @@ public final class UserMenu {
                 case 1 -> {
                     int amount = ScannerWrapper.nextInt("Enter the amount: ");
                     PaymentService.chargeWallet(amount, user);
+                    System.out.println(ConsoleStyle.GREEN + "Wallet Charged successfully" + ConsoleStyle.RESET);
+                    ScannerWrapper.pause();
                 }
                 case 2 -> seeTransactions(user);
                 case 3 -> seeFines(user);
@@ -152,7 +159,7 @@ public final class UserMenu {
     private static void seeTransactions(NormalUser user) {
         ConsoleStyle.clearScreen();
         for (Transaction transaction : user.getWallet().getTransactions()) {
-            System.out.println(transaction);
+            System.out.println(ConsoleStyle.YELLOW + transaction + ConsoleStyle.RESET + "\n");
         }
         ScannerWrapper.pause();
     }
@@ -160,7 +167,7 @@ public final class UserMenu {
     private static void seeFines(NormalUser user) {
         ConsoleStyle.clearScreen();
         for (Fine fine : user.getFines()) {
-            System.out.println(fine);
+            System.out.println(ConsoleStyle.YELLOW + fine + ConsoleStyle.RESET + "\n");
         }
         ScannerWrapper.pause();
     }
@@ -170,7 +177,7 @@ public final class UserMenu {
             ConsoleStyle.clearScreen();
             System.out.println("Capacity: " + (user.getBorrowLimit() - user.activeBorrows()));
             for (Borrowed borrowed : user.getBorrowedList()) {
-                System.out.println(borrowed);
+                System.out.println(ConsoleStyle.YELLOW + borrowed + ConsoleStyle.RESET + "\n");
             }
 
             System.out.println(
@@ -210,14 +217,22 @@ public final class UserMenu {
         String title = ScannerWrapper.nextLine("Item title: ");
         LibraryItem item = Catalog.getInstance().getItem(title);
 
-        if (item == null) {
-            throw new IllegalArgumentException("Item not found");
+        try {
+            if (item == null) {
+                throw new IllegalArgumentException("Item not found");
+            }
+            user.borrowItem(item);
+            System.out.println(ConsoleStyle.GREEN + "Item borrowed successfully" + ConsoleStyle.RESET);
+            ScannerWrapper.pause();
+        } catch (RuntimeException e) {
+            System.out.println(ConsoleStyle.RED + e.getMessage() + ConsoleStyle.RESET);
+            ScannerWrapper.pause();
         }
-        user.borrowItem(item);
+
     }
 
     private static void extendBorrow(NormalUser user) {
-
+        ConsoleStyle.clearScreen();
         String id = ScannerWrapper.nextLine("borrow ID: ");
         Borrowed borrowed = user.getBorrowedMap().get(id);
 
@@ -227,9 +242,12 @@ public final class UserMenu {
 
         long days = ScannerWrapper.nextLong("Days to extend: ");
         borrowed.extendBorrowTime(days);
+        System.out.println(ConsoleStyle.GREEN + "Borrow time extended successfully" + ConsoleStyle.RESET);
+        ScannerWrapper.pause();
     }
 
     private static void returnBorrow(NormalUser user) {
+        ConsoleStyle.clearScreen();
         String id = ScannerWrapper.nextLine("borrow ID: ");
         Borrowed borrowed = user.getBorrowedMap().get(id);
 
@@ -237,10 +255,13 @@ public final class UserMenu {
             throw new IllegalArgumentException("Borrow record not found");
         }
         user.returnItem(borrowed);
+        System.out.println(ConsoleStyle.GREEN + "Item returned successfully" + ConsoleStyle.RESET);
+        ScannerWrapper.pause();
     }
 
     private static void setting(NormalUser user) {
         while (true) {
+            ConsoleStyle.clearScreen();
             System.out.println(
                     ConsoleStyle.BG_WHITE + ConsoleStyle.BLUE +
                             "options:           \n" +
@@ -256,6 +277,9 @@ public final class UserMenu {
             int select = ScannerWrapper.nextInt("Choose an option to change: ");
             if (handleSettingSelection(select, user)) {
                 return;
+            } else {
+                System.out.println(ConsoleStyle.GREEN + "Data updated successfully" + ConsoleStyle.RESET);
+                ScannerWrapper.pause();
             }
         }
     }
@@ -292,8 +316,7 @@ public final class UserMenu {
                         ConsoleStyle.RESET
         );
 
-        int select = ScannerWrapper.nextInt("Select ticket type(Enter anything else to abort): ");
-        String message = ScannerWrapper.nextLine("Message: ");
+        int select = ScannerWrapper.nextInt("Select ticket type(Enter any other number to abort): ");
         TicketType type;
         switch (select) {
             case 1 -> type = TicketType.REPORT_PROBLEM;
@@ -302,9 +325,18 @@ public final class UserMenu {
                 return;
             }
         }
+        String message = ScannerWrapper.nextLine("Message: ");
 
         user.requestSupport(message, type);
-
         System.out.println(ConsoleStyle.GREEN + "Support request submitted successfully." + ConsoleStyle.RESET);
+        ScannerWrapper.pause();
+    }
+
+    public static void seeSupportTickets(NormalUser user){
+        ConsoleStyle.clearScreen();
+        for (SupportTicket ticket : user.getTicketList()) {
+            System.out.println(ConsoleStyle.YELLOW + ticket + ConsoleStyle.RESET + "\n");
+        }
+        ScannerWrapper.pause();
     }
 }

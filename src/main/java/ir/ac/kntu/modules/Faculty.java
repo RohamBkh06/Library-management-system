@@ -10,4 +10,9 @@ public class Faculty extends NormalUser{
     public int getBorrowLimit() {
         return 10;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + "Type: Faculty Member";
+    }
 }

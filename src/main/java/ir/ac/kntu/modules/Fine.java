@@ -8,13 +8,12 @@ import java.time.LocalDate;
 public class Fine {
     private final String id;
     private final Borrowed borrowedItem;
-    private boolean paid;
     private LocalDate paymentDate;
 
     public Fine(Borrowed borrowedItem){
         this.borrowedItem = borrowedItem;
         this.id = IdGenerator.generateFineId();
-        this.paid = false;
+
     }
 
     public String getId() {
@@ -26,14 +25,13 @@ public class Fine {
     }
 
     public boolean isPaid(){
-        return paid;
+        return this.getAmount() == 0 || this.getPaymentDate() != null;
     }
 
     public void pay(){
         if (this.isPaid()){
             throw new IllegalStateException("fine already paid");
         }
-        this.paid = true;
         this.paymentDate = LocalDate.now();
     }
 
@@ -43,11 +41,11 @@ public class Fine {
 
     @Override
     public String toString() {
-        return "Fine{" +
-                "id='" + id +  
-                ", borrowedItem=" + borrowedItem +
-                ", paid=" + paid +
-                ", paymentDate=" + paymentDate +
-                '}';
+        return "Fine{ " +
+                "id= " + id +
+                ", borrowedItem= " + borrowedItem +
+                ", is paid= " + ((this.getPaymentDate() == null) ? "No" : "Yes") +
+                ", paymentDate= " + paymentDate +
+                " }";
     }
 }

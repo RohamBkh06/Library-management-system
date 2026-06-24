@@ -1,5 +1,6 @@
 package ir.ac.kntu.modules;
 
+import ir.ac.kntu.main.LibraryManger;
 import ir.ac.kntu.util.Validator;
 
 import java.util.ArrayList;
@@ -120,7 +121,9 @@ public abstract class NormalUser {
     }
 
     public void requestSupport(String message, TicketType type){
-        this.ticketList.add(new SupportTicket(this, type, message));
+        SupportTicket ticket = new SupportTicket(this, type, message);
+        this.ticketList.add(ticket);
+        LibraryManger.getInstance().addTicket(ticket);
     }
 
     public boolean hasUnpaidFine(){
@@ -161,6 +164,11 @@ public abstract class NormalUser {
     }
 
     public List<SupportTicket> getTicketList() {
-        return ticketList;
+        return new ArrayList<>(ticketList);
+    }
+
+    @Override
+    public String toString() {
+        return "User{ " + "firstName= " + firstName + ", lastName= " + lastName + ", id= " + id + ", email= " + email + ", phoneNum= " + phoneNum + " }";
     }
 }

@@ -8,11 +8,13 @@ public class LibraryManger {
     private static LibraryManger instance;
     private Map<String, NormalUser> userById;
     private Map<String, Supporter> supporterByPassword;
+    private Map<String, SupportTicket> ticketMap;
 
 
     private LibraryManger(){
         this.supporterByPassword = new HashMap<>();
         this.userById = new HashMap<>();
+        this.ticketMap = new HashMap<>();
     }
 
     public static LibraryManger getInstance(){
@@ -20,6 +22,10 @@ public class LibraryManger {
             instance = new LibraryManger();
         }
         return instance;
+    }
+
+    public void addTicket(SupportTicket ticket){
+        this.ticketMap.put(ticket.getId(), ticket);
     }
 
     public void addUser(NormalUser user){
@@ -36,7 +42,7 @@ public class LibraryManger {
             ans.addAll(normalUser.getBorrowedList());
         }
         ans.sort(Comparator.comparing(Borrowed::getBorrowDate).reversed());
-        return ans.subList(0, 10);
+        return ans.subList(0, Math.min(10, ans.size()));
     }
 
     public List<Fine> getAllFines(){
@@ -59,5 +65,13 @@ public class LibraryManger {
         }
 
         return supporter;
+    }
+
+    public List<SupportTicket> getAllTickets() {
+        return new ArrayList<>(this.ticketMap.values());
+    }
+
+    public Map<String, SupportTicket> getTicketMap() {
+        return new HashMap<>(ticketMap);
     }
 }

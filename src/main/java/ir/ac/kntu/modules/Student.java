@@ -11,4 +11,8 @@ public class Student extends NormalUser{
         return 5;
     }
 
+    @Override
+    public String toString() {
+        return super.toString() + "Type: Student";
+    }
 }

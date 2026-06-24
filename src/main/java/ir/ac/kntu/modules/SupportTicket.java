@@ -47,4 +47,15 @@ public class SupportTicket {
     public String getAnswer() {
         return answer;
     }
+
+    @Override
+    public String toString() {
+        return "SupportTicket{" +
+                "user=" + user +
+                "\n, id=" + id +
+                ", type=" + type +
+                "\n, message='" + message +
+                ", answer='" + answer +
+                '}';
+    }
 }

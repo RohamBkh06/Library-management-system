@@ -63,13 +63,13 @@ public class Borrowed {
     @Override
     public String toString() {
         return "Borrowed{" +
-                "borrower=" + borrower.getFirstName() +
-                ", id='" + id +
-                ", item=" + item +
-                ", borrowDate=" + borrowDate +
-                ", returnDueDate=" + returnDueDate +
-                ", isReturned=" + isReturned +
-                ", fine=" + fine.getAmount() +
+                "borrower= " + borrower.getFirstName() +
+                ", id= " + id +
+                "\n, item= " + item +
+                "\n, borrowDate= " + borrowDate +
+                ", returnDueDate= " + returnDueDate +
+                ", isReturned= " + isReturned +
+                ((fine.isPaid()) ? ", fine= " + fine.getAmount() : "") +
                 '}';
     }
 }

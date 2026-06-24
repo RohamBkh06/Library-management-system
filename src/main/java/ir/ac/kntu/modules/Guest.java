@@ -11,4 +11,8 @@ public class Guest extends NormalUser{
         return 2;
     }
 
+    @Override
+    public String toString() {
+        return super.toString() + "Type: Guest";
+    }
 }

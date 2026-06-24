@@ -44,4 +44,9 @@ public abstract class DigitalResource extends LibraryItem {
     public int getPageCount() {
         return pageCount;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + "*Digital Resource* ";
+    }
 }
