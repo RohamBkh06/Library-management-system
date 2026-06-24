@@ -166,6 +166,9 @@ public final class UserMenu {
 
     private static void seeFines(NormalUser user) {
         ConsoleStyle.clearScreen();
+        if (user.getFines().isEmpty()){
+            System.out.println(ConsoleStyle.CYAN + "You have no Unpaid fines!" + ConsoleStyle.RESET);
+        }
         for (Fine fine : user.getFines()) {
             System.out.println(ConsoleStyle.YELLOW + fine + ConsoleStyle.RESET + "\n");
         }
