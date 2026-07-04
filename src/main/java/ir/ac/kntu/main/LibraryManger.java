@@ -67,6 +67,15 @@ public class LibraryManger {
         return supporter;
     }
 
+    public NormalUser loginUser(String id) {
+        NormalUser user = userById.get(id);
+        if (user == null) {
+            throw new IllegalArgumentException("Wrong ID");
+        }
+
+        return user;
+    }
+
     public List<SupportTicket> getAllTickets() {
         return new ArrayList<>(this.ticketMap.values());
     }

@@ -1,6 +1,7 @@
 package ir.ac.kntu.main;
 
 import ir.ac.kntu.modules.*;
+import ir.ac.kntu.util.Pagination;
 import ir.ac.kntu.util.ScannerWrapper;
 import ir.ac.kntu.util.ConsoleStyle;
 
@@ -17,6 +18,7 @@ public final class SupporterMenu {
             ConsoleStyle.clearScreen();
             System.out.println(ConsoleStyle.BOLD + ConsoleStyle.CYAN +
                     "================ SUPPORTER MENU ================\n" +
+                    "Welcome " + supporter.getName() + "\n" +
                     "1. View all users       \n" +
                     "2. View recent borrows  \n" +
                     "3. View all fines       \n" +
@@ -49,14 +51,46 @@ public final class SupporterMenu {
     }
 
     private static void viewAllUsers() {
-        ConsoleStyle.clearScreen();
-        Map<String, NormalUser> users = LibraryManger.getInstance().getUserById();
-        if (users.isEmpty()) {
-            System.out.println("No users found.");
-            return;
-        }
-        for (NormalUser user : users.values()) {
-            System.out.println(user + "\n" + " | Active Borrows: " + user.activeBorrows() + " | Number of Fines: " + user.getFines().size());
+        while (true) {
+            ConsoleStyle.clearScreen();
+            Map<String, NormalUser> users = LibraryManger.getInstance().getUserById();
+            if (users.isEmpty()) {
+                System.out.println("No users found.");
+                return;
+            }
+            Pagination<NormalUser> pagination = new Pagination<>(users.values().stream().toList());
+            for (NormalUser user : pagination.getCurrentPage()) {
+                System.out.println(ConsoleStyle.YELLOW + user + "\n" + " | Active Borrows: " + user.activeBorrows() + " | Number of Fines: " + user.getFines().size() + ConsoleStyle.RESET);
+            }
+            System.out.println();
+            System.out.println(ConsoleStyle.BOLD + ConsoleStyle.CYAN +
+                    "=========page " + pagination.getCurrentPageNumber() + "/" + pagination.gerTotalPageNumber() + "=========\n" +
+                    (pagination.hasNextPage() ? "n. Next page      \n" : "") +
+                    (pagination.hasPreviousPage() ? "p. Previous page  \n" : "") +
+                    "==========================\n" +
+                    "1. Exit           \n" +
+                    ConsoleStyle.RESET);
+            try {
+                String choice = ScannerWrapper.nextLine("Select option: ");
+                switch (choice.toLowerCase()) {
+                    case "n" -> {
+                        if (pagination.hasNextPage()){
+                            pagination.nextPage();
+                        }
+                    }
+                    case "p" -> {
+                        if (pagination.hasPreviousPage()){
+                            pagination.previousPage();
+                        }
+                    }
+                    case "1" -> {
+                        return;
+                    }
+                    default -> throw new IllegalArgumentException("Invalid option");
+                }
+            } catch (IllegalArgumentException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
@@ -112,9 +146,8 @@ public final class SupporterMenu {
                     "2. Magazine     \n" +
                     "3. Ebook        \n" +
                     "4. AudioBook    \n" +
-                    "                \n" +
+                    "================\n" +
                     "5. Exit         \n" +
-                    "===============================================" +
                     ConsoleStyle.RESET);
             try {
                 int choice = ScannerWrapper.nextInt("Select option: ");

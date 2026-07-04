@@ -2,6 +2,7 @@ package ir.ac.kntu.main;
 
 import ir.ac.kntu.modules.*;
 import ir.ac.kntu.util.ConsoleStyle;
+import ir.ac.kntu.util.Pagination;
 import ir.ac.kntu.util.PaymentService;
 import ir.ac.kntu.util.ScannerWrapper;
 
@@ -51,7 +52,8 @@ public final class UserMenu {
     private static void seeLibraryItems(NormalUser user) {
         while (true) {
             ConsoleStyle.clearScreen();
-            for (LibraryItem item : Catalog.getInstance().getItems()) {
+            Pagination<LibraryItem> pagination = new Pagination<>(Catalog.getInstance().getItems());
+            for (LibraryItem item : pagination.getCurrentPage()) {
                 System.out.println(ConsoleStyle.YELLOW +item+ ConsoleStyle.RESET +"\n");
             }
             System.out.println();
@@ -61,21 +63,23 @@ public final class UserMenu {
                             "1. title          \n" +
                             "2. category       \n" +
                             "3. publish year   \n" +
-                            "==================\n" +
-                            "4. borrow an item \n" +
-                            "                  \n" +
+                            "======page " + pagination.getCurrentPageNumber() + "/" + pagination.gerTotalPageNumber() + "======\n" +
+                            (pagination.hasNextPage() ? "n. Next page      \n" : "") +
+                            (pagination.hasPreviousPage() ? "p. Previous page  \n" : "") +
                             "5. return         \n" +
                             ConsoleStyle.RESET
             );
 
-            int select = ScannerWrapper.nextInt(selectionString);
+            String select = ScannerWrapper.nextLine(selectionString);
 
-            switch (select) {
-                case 1 -> filterByTitle();
-                case 2 -> filterByCategory();
-                case 3 -> filterByPublishYear();
-                case 4 -> borrowItem(user);
-                case 5 -> {
+            switch (select.toLowerCase()) {
+                case "1" -> filterByTitle();
+                case "2" -> filterByCategory();
+                case "3" -> filterByPublishYear();
+                case "4" -> borrowItem(user);
+                case "n" -> pagination.nextPage();
+                case "p" -> pagination.previousPage();
+                case "5" -> {
                     return;
                 }
                 default -> {

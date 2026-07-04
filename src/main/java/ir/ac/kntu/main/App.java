@@ -33,9 +33,9 @@ public class App {
                     "                   Library Management System                   \n" +
                     "===============================================================" + ConsoleStyle.RESET);
             System.out.println(ConsoleStyle.BG_WHITE + ConsoleStyle.BLUE +
-                    "1. Sign up             \n" +
-                    "2. Log in as supporter \n" +
-                    "3. Exit                \n" + ConsoleStyle.RESET);
+                    "1. Sign up         \n" +
+                    "2. Log in          \n" +
+                    "3. Exit            \n" + ConsoleStyle.RESET);
 
             int select = ScannerWrapper.nextInt("Please select one of the options: ");
             switch (select) {
@@ -43,7 +43,7 @@ public class App {
                     userSignUp();
                     break;
                 case 2:
-                    supporterLogin();
+                    login();
                     break;
                 case 3:
                     finishProgram();
@@ -109,17 +109,42 @@ public class App {
         return user;
     }
 
-    public static void supporterLogin() {
+    public static void login() {
         while (true) {
             try {
-                String password = ScannerWrapper.nextLine("Password: " + ConsoleStyle.PURPLE + "Leave Empty to return." + ConsoleStyle.RESET);
-                if (password.isBlank()){
-                    return;
-                }
-                Supporter supporter = LibraryManger.getInstance().loginSupporter(password);
-                System.out.println(ConsoleStyle.GREEN + "Login successful" + ConsoleStyle.RESET);
+                ConsoleStyle.clearScreen();
+                System.out.println(ConsoleStyle.BG_WHITE + ConsoleStyle.BLUE +
+                        "1. Supporter     \n" +
+                        "2. User          \n" +
+                        "3. Exit          \n" + ConsoleStyle.RESET);
 
-                SupporterMenu.show(supporter);
+                int select = ScannerWrapper.nextInt("Please select one of the options: ");
+                switch (select){
+                    case 1 -> {
+                        String password = ScannerWrapper.nextLine("Password: " + ConsoleStyle.PURPLE + "Leave Empty to return." + ConsoleStyle.RESET);
+                        if (password.isBlank()){
+                            return;
+                        }
+                        Supporter supporter = LibraryManger.getInstance().loginSupporter(password);
+                        SupporterMenu.show(supporter);
+                    }
+                    case 2-> {
+                        String id = ScannerWrapper.nextLine("User ID: " + ConsoleStyle.PURPLE + "Leave Empty to return." + ConsoleStyle.RESET);
+                        if (id.isBlank()){
+                            return;
+                        }
+                        NormalUser user = LibraryManger.getInstance().loginUser(id);
+                        UserMenu.show(user);
+                    }
+                    case 3 -> {
+                        return;
+                    }
+                    default -> {
+                        ScannerWrapper.rewritePrompt("Selection out of bound.");
+                        ScannerWrapper.pause();
+                    }
+
+                }
 
             } catch (RuntimeException e) {
                 System.out.println(ConsoleStyle.RED + e.getMessage() + ConsoleStyle.RESET);
