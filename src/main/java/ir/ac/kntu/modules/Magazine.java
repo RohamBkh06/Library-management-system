@@ -30,6 +30,11 @@ public class Magazine extends LibraryItem{
         return false;
     }
 
+    @Override
+    public void returnBack() {
+        this.availableCopies++;
+    }
+
     public long getAvailableCopies() {
         return availableCopies;
     }
@@ -44,6 +49,6 @@ public class Magazine extends LibraryItem{
 
     @Override
     public String toString() {
-        return super.toString() + "Type: Magazine";
+        return super.toString()+ "\n" + "Type: Magazine, " + "Available copies: " + availableCopies;
     }
 }

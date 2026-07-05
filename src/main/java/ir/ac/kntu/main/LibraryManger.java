@@ -8,13 +8,15 @@ public class LibraryManger {
     private static LibraryManger instance;
     private Map<String, NormalUser> userById;
     private Map<String, Supporter> supporterByPassword;
-    private Map<String, SupportTicket> ticketMap;
+    private Map<String, SupportTicket> ticketById;
+    private Map<String, Admin> adminByPassword;
 
 
     private LibraryManger(){
         this.supporterByPassword = new HashMap<>();
         this.userById = new HashMap<>();
-        this.ticketMap = new HashMap<>();
+        this.ticketById = new HashMap<>();
+        this.adminByPassword = new HashMap<>();
     }
 
     public static LibraryManger getInstance(){
@@ -25,7 +27,7 @@ public class LibraryManger {
     }
 
     public void addTicket(SupportTicket ticket){
-        this.ticketMap.put(ticket.getId(), ticket);
+        this.ticketById.put(ticket.getId(), ticket);
     }
 
     public void addUser(NormalUser user){
@@ -34,6 +36,10 @@ public class LibraryManger {
 
     public void addSupporter(Supporter supporter){
         this.supporterByPassword.put(supporter.getPassword(), supporter);
+    }
+
+    public void addAdmin(Admin admin){
+        this.adminByPassword.put(admin.getPassword(), admin);
     }
 
     public List<Borrowed> getRecentBorrows(){
@@ -77,10 +83,18 @@ public class LibraryManger {
     }
 
     public List<SupportTicket> getAllTickets() {
-        return new ArrayList<>(this.ticketMap.values());
+        return new ArrayList<>(this.ticketById.values());
     }
 
-    public Map<String, SupportTicket> getTicketMap() {
-        return new HashMap<>(ticketMap);
+    public Map<String, SupportTicket> getTicketById() {
+        return new HashMap<>(ticketById);
+    }
+
+    public List<Entity> getAllEntities() {
+        ArrayList<Entity> ans = new ArrayList<>();
+        ans.addAll(this.userById.values());
+        ans.addAll(this.supporterByPassword.values());
+        ans.addAll(this.adminByPassword.values());
+        return ans;
     }
 }

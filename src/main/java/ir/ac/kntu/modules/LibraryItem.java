@@ -10,6 +10,8 @@ public abstract class LibraryItem {
 
     protected abstract boolean lend();
 
+    public abstract void returnBack();
+
     public String getId() {
         return id;
     }
@@ -51,7 +53,7 @@ public abstract class LibraryItem {
 
     @Override
     public String toString() {
-        return  title + "{" +
+        return  title + " {" +
                 "id= " + id +
                 ", publishYear= " + publishYear +
                 ", category= " + category +

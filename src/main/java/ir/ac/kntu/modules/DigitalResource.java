@@ -25,8 +25,13 @@ public abstract class DigitalResource extends LibraryItem {
     }
 
     @Override
-    protected boolean lend() {
+    public boolean lend() {
         return true;
+    }
+
+    @Override
+    public void returnBack() {
+        return;
     }
 
     public DigitalFormat getFormat() {
@@ -47,6 +52,6 @@ public abstract class DigitalResource extends LibraryItem {
 
     @Override
     public String toString() {
-        return super.toString() + "*Digital Resource* ";
+        return super.toString()+ "\n" + "*Digital Resource* ";
     }
 }

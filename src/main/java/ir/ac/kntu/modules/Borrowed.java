@@ -1,6 +1,7 @@
 package ir.ac.kntu.modules;
 
 import ir.ac.kntu.util.IdGenerator;
+import ir.ac.kntu.util.SystemProperties;
 
 import java.time.LocalDate;
 
@@ -23,6 +24,7 @@ public class Borrowed {
 
     public void returnBorrow(){
         this.isReturned = true;
+        this.item.returnBack();
     }
 
     public boolean isReturned() {
@@ -34,7 +36,7 @@ public class Borrowed {
         this.borrower = borrower;
         this.id = IdGenerator.generateBorrowedId();
         this.borrowDate = LocalDate.now();
-        this.returnDueDate = this.borrowDate.plusDays(14L);
+        this.returnDueDate = this.borrowDate.plusDays(SystemProperties.getBaseBorrowTime());
         this.isReturned = false;
         this.fine = new Fine(this);
     }
@@ -43,13 +45,11 @@ public class Borrowed {
         return fine;
     }
 
-    public boolean extendBorrowTime(long daysToExtend){
-        if (fine.isPaid()){
-            borrowDate.plusDays(daysToExtend);
-            return true;
-        } else{
-            return false;
+    public void extendBorrowTime(long daysToExtend){
+        if (!fine.isPaid()){
+            throw new IllegalStateException("This borrow record has unpaid fine.");
         }
+        returnDueDate.plusDays(daysToExtend);
     }
 
     public LocalDate getBorrowDate() {

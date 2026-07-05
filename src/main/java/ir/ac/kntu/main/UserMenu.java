@@ -317,17 +317,21 @@ public final class UserMenu {
 
         System.out.println(
                 ConsoleStyle.BG_WHITE + ConsoleStyle.BLUE +
-                        "Types :            \n" +
-                        "1. Report Problem  \n" +
-                        "2. Request Item    \n" +
+                        "Types :             \n" +
+                        "1. Report Problem   \n" +
+                        "2. Request Item     \n" +
+                        "3. Financial affair \n" +
+                        "4. Reserve item     \n" +
                         ConsoleStyle.RESET
         );
 
         int select = ScannerWrapper.nextInt("Select ticket type(Enter any other number to abort): ");
-        TicketType type;
+        Department type;
         switch (select) {
-            case 1 -> type = TicketType.REPORT_PROBLEM;
-            case 2 -> type = TicketType.REQUEST_ITEM;
+            case 1 -> type = Department.REPORT_PROBLEM;
+            case 2 -> type = Department.REQUEST_ITEM;
+            case 3 -> type = Department.FINANCIAL_AFFAIRS;
+            case 4 -> type = Department.RESERVE_ITEM;
             default -> {
                 return;
             }

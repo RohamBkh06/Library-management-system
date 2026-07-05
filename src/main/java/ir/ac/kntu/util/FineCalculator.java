@@ -6,8 +6,6 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
 public final class FineCalculator {
-    private final static double BASERATE = 50_000;
-    private final static double DAILYFINE = 10_000;
 
     private FineCalculator(){}
 
@@ -20,10 +18,10 @@ public final class FineCalculator {
             delay = ChronoUnit.DAYS.between(borrowed.getReturnDueDate(), borrowed.getFine().getPaymentDate());
         }
         if (delay > 0) {
-            ans = BASERATE;
+            ans = SystemProperties.getBaseFineRate();
         }
         if (delay > 7) {
-            ans += (delay - 7) * DAILYFINE;
+            ans += (delay - 7) * SystemProperties.getDailyFineRate();
         }
 
         return ans;

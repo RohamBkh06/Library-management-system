@@ -18,7 +18,7 @@ public final class SupporterMenu {
             ConsoleStyle.clearScreen();
             System.out.println(ConsoleStyle.BOLD + ConsoleStyle.CYAN +
                     "================ SUPPORTER MENU ================\n" +
-                    "Welcome " + supporter.getName() + "\n" +
+                    "Welcome " + supporter.getFirstName() + "\n" +
                     "1. View all users       \n" +
                     "2. View recent borrows  \n" +
                     "3. View all fines       \n" +
@@ -316,7 +316,7 @@ public final class SupporterMenu {
                 return;
             } else{
                 String answer = ScannerWrapper.nextLine("Enter the answer: ");
-                LibraryManger.getInstance().getTicketMap().get(id).setAnswer(answer);
+                LibraryManger.getInstance().getTicketById().get(id).setAnswer(answer);
                 System.out.println(ConsoleStyle.GREEN + "Ticket answered successfully" + ConsoleStyle.RESET);
                 ScannerWrapper.pause();
             }

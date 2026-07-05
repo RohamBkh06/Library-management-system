@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public abstract class NormalUser {
+public abstract class NormalUser implements Entity {
     private String firstName;
     private String lastName;
     private String id;
@@ -120,7 +120,7 @@ public abstract class NormalUser {
         return new ArrayList<>(allBorrows.values());
     }
 
-    public void requestSupport(String message, TicketType type){
+    public void requestSupport(String message, Department type){
         SupportTicket ticket = new SupportTicket(this, type, message);
         this.ticketList.add(ticket);
         LibraryManger.getInstance().addTicket(ticket);
@@ -169,6 +169,6 @@ public abstract class NormalUser {
 
     @Override
     public String toString() {
-        return "User{ " + "firstName= " + firstName + ", lastName= " + lastName + ", id= " + id + ", email= " + email + ", phoneNum= " + phoneNum + " }";
+        return "Role: User{ " + "firstName= " + firstName + ", lastName= " + lastName + ", id= " + id + ", email= " + email + ", phoneNum= " + phoneNum + " }";
     }
 }

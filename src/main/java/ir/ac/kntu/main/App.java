@@ -11,10 +11,11 @@ import java.io.IOException;
 public class App {
 
     public static void test(){
+        LibraryManger.getInstance().addAdmin(new Admin("Parsa", "Abdollahi", "Parsa_admin", "1386", Admin.NULL_ADMIN));
         LibraryManger.getInstance().addUser(new Student("Ali", "Ahmadi", "STU-123456", "ali.ahmadi@gmail.com", "09123456789", "Ali@1234"));
         LibraryManger.getInstance().addUser(new Faculty("Reza", "Karimi", "FAC-124578", "r.karimi@university.edu", "09125556677", "Prof@123"));
         LibraryManger.getInstance().addUser(new Guest("Roham", "Bakhtiari", "GST-125690", "roham.bkh@gmail.com", "09123456789", "Guest@123"));
-        Supporter supporter = new Supporter("Ali Ahmadi", "ali_support", "123456");
+        Supporter supporter = new Supporter("Ali", "Ahmadi", "ali_support", "123456", Department.REPORT_PROBLEM);
         LibraryManger.getInstance().addSupporter(supporter);
         supporter.addItem(new Magazine("Time", "MAG-11111111", 2025, "News", 12, "0040-781X", PublicationFrequency.WEEKLY));
         supporter.addItem(new Book("Clean Code", "BOK-12453678", 2008, "Programming", "Robert C. Martin", 464, 5, "9780132350884"));

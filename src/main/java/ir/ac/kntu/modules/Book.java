@@ -32,6 +32,11 @@ public class Book extends LibraryItem{
         return false;
     }
 
+    @Override
+    public void returnBack() {
+        this.availableCopies++;
+    }
+
     public String getAuthor() {
         return author;
     }
@@ -50,6 +55,6 @@ public class Book extends LibraryItem{
 
     @Override
     public String toString() {
-        return super.toString() + "Type: Book";
+        return super.toString()+ "\n" + "Type: Book, " + "Available copies: " + availableCopies;
     }
 }

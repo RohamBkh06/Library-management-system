@@ -5,15 +5,15 @@ import ir.ac.kntu.util.IdGenerator;
 public class SupportTicket {
     private NormalUser user;
     private String id;
-    private TicketType type;
+    private Department department;
     private String message;
     private boolean isAnswered;
     private String answer;
 
-    public SupportTicket(NormalUser user, TicketType type, String message){
+    public SupportTicket(NormalUser user, Department department, String message){
         this.user = user;
         this.message = message;
-        this.type = type;
+        this.department = department;
         isAnswered = false;
         this.id = IdGenerator.generateTicketId();
         this.answer = "No answers has been submitted by the supporters yet.";
@@ -32,8 +32,8 @@ public class SupportTicket {
         return id;
     }
 
-    public TicketType getType() {
-        return type;
+    public Department getDepartment() {
+        return department;
     }
 
     public String getMessage() {
@@ -51,9 +51,9 @@ public class SupportTicket {
     @Override
     public String toString() {
         return "SupportTicket{" +
-                "user=" + user +
-                "\n, id=" + id +
-                ", type=" + type +
+                "user= " + user +
+                ", id= " + id +
+                ", department= " + department +
                 "\n, message='" + message +
                 ", answer='" + answer +
                 '}';
