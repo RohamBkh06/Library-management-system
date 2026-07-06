@@ -115,9 +115,10 @@ public class App {
             try {
                 ConsoleStyle.clearScreen();
                 System.out.println(ConsoleStyle.BG_WHITE + ConsoleStyle.BLUE +
-                        "1. Supporter     \n" +
-                        "2. User          \n" +
-                        "3. Exit          \n" + ConsoleStyle.RESET);
+                        "1. Supporter   \n" +
+                        "2. Admin       \n" +
+                        "3. User        \n" +
+                        "4. Exit        \n" + ConsoleStyle.RESET);
 
                 int select = ScannerWrapper.nextInt("Please select one of the options: ");
                 switch (select){
@@ -130,6 +131,14 @@ public class App {
                         SupporterMenu.show(supporter);
                     }
                     case 2-> {
+                        String password = ScannerWrapper.nextLine("Password: " + ConsoleStyle.PURPLE + "Leave Empty to return." + ConsoleStyle.RESET);
+                        if (password.isBlank()){
+                            return;
+                        }
+                        Admin admin = LibraryManger.getInstance().loginAdmin(password);
+                        //adminMenu
+                    }
+                    case 3-> {
                         String id = ScannerWrapper.nextLine("User ID: " + ConsoleStyle.PURPLE + "Leave Empty to return." + ConsoleStyle.RESET);
                         if (id.isBlank()){
                             return;
@@ -137,12 +146,11 @@ public class App {
                         NormalUser user = LibraryManger.getInstance().loginUser(id);
                         UserMenu.show(user);
                     }
-                    case 3 -> {
+                    case 4 -> {
                         return;
                     }
                     default -> {
-                        ScannerWrapper.rewritePrompt("Selection out of bound.");
-                        ScannerWrapper.pause();
+                        throw new IllegalArgumentException("Selection out of bound.");
                     }
 
                 }

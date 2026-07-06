@@ -15,6 +15,7 @@ public abstract class NormalUser implements Entity {
     private String email;
     private String phoneNum;
     private String password;
+    private boolean isActive;
     private Wallet wallet;
     private Map<String, Borrowed> allBorrows;
     private List<SupportTicket> ticketList;
@@ -58,6 +59,7 @@ public abstract class NormalUser implements Entity {
         this.wallet = new Wallet();
         this.allBorrows = new HashMap<>();
         this.ticketList = new ArrayList<>();
+        this.isActive = true;
 
     }
 
@@ -165,6 +167,14 @@ public abstract class NormalUser implements Entity {
 
     public List<SupportTicket> getTicketList() {
         return new ArrayList<>(ticketList);
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
     }
 
     @Override

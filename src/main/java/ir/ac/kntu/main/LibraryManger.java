@@ -3,6 +3,7 @@ package ir.ac.kntu.main;
 import ir.ac.kntu.modules.*;
 
 import java.util.*;
+import java.util.function.Predicate;
 
 public class LibraryManger {
     private static LibraryManger instance;
@@ -34,12 +35,39 @@ public class LibraryManger {
         this.userById.put(user.getId(), user);
     }
 
+    public void removeUser(NormalUser user){
+        this.userById.remove(user.getId());
+    }
+
     public void addSupporter(Supporter supporter){
+        if (this.supporterByPassword.containsKey(supporter.getPassword())){
+            throw new IllegalStateException("Supporter already exists.");
+        }
         this.supporterByPassword.put(supporter.getPassword(), supporter);
     }
 
+    public void removeSupporter(Supporter supporter){
+        this.supporterByPassword.remove(supporter.getPassword());
+    }
+
     public void addAdmin(Admin admin){
+        if (this.adminByPassword.containsKey(admin.getPassword())){
+            throw new IllegalStateException("Admin already exists.");
+        }
         this.adminByPassword.put(admin.getPassword(), admin);
+    }
+
+    public void removeAdmin(Admin editor, Admin target){
+        if (editor.canEdit(target)){
+            for (Admin admin : adminByPassword.values()) {
+                if (admin.getCreator().equals(target)){
+                    admin.setCreator(target.getCreator());
+                }
+            }
+            this.adminByPassword.remove(target.getPassword());
+        } else {
+            throw new IllegalStateException("You don't have the access to edit/remove this admin.");
+        }
     }
 
     public List<Borrowed> getRecentBorrows(){
@@ -62,6 +90,15 @@ public class LibraryManger {
 
     public Map<String, NormalUser> getUserById() {
         return new HashMap<>(this.userById);
+    }
+
+    public Admin loginAdmin(String password) {
+        Admin admin = adminByPassword.get(password);
+        if (admin == null) {
+            throw new IllegalArgumentException("Wrong password");
+        }
+
+        return admin;
     }
 
     public Supporter loginSupporter(String password) {
@@ -95,6 +132,16 @@ public class LibraryManger {
         ans.addAll(this.userById.values());
         ans.addAll(this.supporterByPassword.values());
         ans.addAll(this.adminByPassword.values());
+        return ans;
+    }
+
+    public List<Entity> filteredSearch(Predicate<Entity> predicate){
+        ArrayList<Entity> ans = new ArrayList<>();
+        for (Entity entity : getAllEntities()) {
+            if (predicate.test(entity)){
+                ans.add(entity);
+            }
+        }
         return ans;
     }
 }

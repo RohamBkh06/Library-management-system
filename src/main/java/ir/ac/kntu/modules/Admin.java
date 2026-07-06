@@ -5,6 +5,7 @@ public class Admin implements Entity{
     private String lastName;
     private String userName;
     private String password;
+    private boolean isActive;
     private Admin creator;
     public static final Admin NULL_ADMIN = new Admin("", "","", "", null);
 
@@ -40,7 +41,7 @@ public class Admin implements Entity{
     public boolean canEdit(Admin target) {
         if (target.getCreator().equals(this) || this.equals(target)) {
             return true;
-        } else if (target.getCreator() == null) {
+        } else if (target.getCreator().equals(Admin.NULL_ADMIN)) {
             return false;
         }
         return this.canEdit(target.getCreator());
@@ -55,5 +56,37 @@ public class Admin implements Entity{
                 ", password= " + password +
                 (this.getCreator().equals(Admin.NULL_ADMIN) ? ", Root Admin" : ", creator= " + creator) +
                 '}';
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setCreator(Admin creator) {
+        this.creator = creator;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(Admin editor, boolean active) {
+        if (editor.canEdit(this)){
+            isActive = active;
+        } else {
+            throw new IllegalStateException("You don't have the access to edit this admin's status.");
+        }
     }
 }
