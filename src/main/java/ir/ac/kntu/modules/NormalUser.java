@@ -173,12 +173,12 @@ public abstract class NormalUser implements Entity {
         return isActive;
     }
 
-    public void setActive(boolean active) {
-        isActive = active;
+    public void changeState() {
+        isActive = !isActive;
     }
 
     @Override
     public String toString() {
-        return "Role: User{ " + "firstName= " + firstName + ", lastName= " + lastName + ", id= " + id + ", email= " + email + ", phoneNum= " + phoneNum + " }";
+        return "Role: User{ " + "firstName= " + firstName + ", lastName= " + lastName + ", id= " + id + ", email= " + email + ", phoneNum= " + phoneNum + "Status= "+ (isActive ? "Active" : "Inactive") + " }";
     }
 }

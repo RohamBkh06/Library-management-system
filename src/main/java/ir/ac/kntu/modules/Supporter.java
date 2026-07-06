@@ -1,5 +1,6 @@
 package ir.ac.kntu.modules;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -11,13 +12,14 @@ public class Supporter implements Entity{
     private boolean isActive;
     private Set<Department> departments;
 
-    public Supporter(String firstName, String lastName, String userName, String password, Department department) {
+    public Supporter(String firstName, String lastName, String userName, String password, Collection<Department> department) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.userName = userName;
         this.password = password;
         this.departments = new HashSet<>();
-        departments.add(department);
+        departments.addAll(department);
+        this.isActive = true;
     }
 
     public void addItem(LibraryItem item){
@@ -26,6 +28,9 @@ public class Supporter implements Entity{
     }
 
     public void answer(SupportTicket ticket, String message){
+        if (!this.departments.contains(ticket.getDepartment())){
+            throw new IllegalStateException("you Don't have the access to answer this ticket.");
+        }
         ticket.setAnswer(message);
     }
 
@@ -66,7 +71,9 @@ public class Supporter implements Entity{
     }
 
     public void addDepartment(Department department) {
-        this.departments.add(department);
+        if (!this.departments.add(department)) {
+            throw new IllegalStateException("Supporter already has access to this department");
+        }
     }
 
     public void removeDepartment(Department department){
@@ -80,8 +87,8 @@ public class Supporter implements Entity{
         return isActive;
     }
 
-    public void setActive(boolean active) {
-        isActive = active;
+    public void changeState() {
+        isActive = !isActive;
     }
 
     @Override
@@ -92,6 +99,7 @@ public class Supporter implements Entity{
                 ", userName= " + userName +
                 ", password= " + password +
                 ", Departments= " + departments +
-                '}';
+                "Status= "+ (isActive ? "Active" : "Inactive") +
+                " }";
     }
 }

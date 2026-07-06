@@ -32,6 +32,9 @@ public class LibraryManger {
     }
 
     public void addUser(NormalUser user){
+        if (this.userById.containsKey(user.getId())){
+            throw new IllegalStateException("User already exists.");
+        }
         this.userById.put(user.getId(), user);
     }
 
@@ -92,12 +95,21 @@ public class LibraryManger {
         return new HashMap<>(this.userById);
     }
 
+    public Map<String, Supporter> getSupporterByPassword() {
+        return new HashMap<>(supporterByPassword);
+    }
+
+    public Map<String, Admin> getAdminByPassword() {
+        return new HashMap<>(adminByPassword);
+    }
+
     public Admin loginAdmin(String password) {
         Admin admin = adminByPassword.get(password);
         if (admin == null) {
             throw new IllegalArgumentException("Wrong password");
+        }  else if (!admin.isActive()){
+            throw new IllegalStateException("Admin's account is not active.");
         }
-
         return admin;
     }
 
@@ -105,8 +117,9 @@ public class LibraryManger {
         Supporter supporter = supporterByPassword.get(password);
         if (supporter == null) {
             throw new IllegalArgumentException("Wrong password");
+        } else if (!supporter.isActive()){
+            throw new IllegalStateException("Supporter's account is not active.");
         }
-
         return supporter;
     }
 
@@ -114,8 +127,9 @@ public class LibraryManger {
         NormalUser user = userById.get(id);
         if (user == null) {
             throw new IllegalArgumentException("Wrong ID");
+        } else if (!user.isActive()){
+            throw new IllegalStateException("User's account is not active.");
         }
-
         return user;
     }
 

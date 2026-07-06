@@ -1,5 +1,7 @@
 package ir.ac.kntu.modules;
 
+import java.util.Objects;
+
 public class Admin implements Entity{
     private String firstName;
     private String lastName;
@@ -15,6 +17,7 @@ public class Admin implements Entity{
         this.userName = userName;
         this.password = password;
         this.creator = creator;
+        this.isActive = true;
     }
 
 
@@ -55,7 +58,8 @@ public class Admin implements Entity{
                 ", userName= " + userName +
                 ", password= " + password +
                 (this.getCreator().equals(Admin.NULL_ADMIN) ? ", Root Admin" : ", creator= " + creator) +
-                '}';
+                "Status= "+ (isActive ? "Active" : "Inactive") +
+                " }";
     }
 
     public void setFirstName(String firstName) {
@@ -82,11 +86,23 @@ public class Admin implements Entity{
         return isActive;
     }
 
-    public void setActive(Admin editor, boolean active) {
+    public void changeState(Admin editor) {
         if (editor.canEdit(this)){
-            isActive = active;
+            isActive = !isActive;
         } else {
             throw new IllegalStateException("You don't have the access to edit this admin's status.");
         }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Admin admin = (Admin) obj;
+        return Objects.equals(firstName, admin.firstName) && Objects.equals(lastName, admin.lastName) && Objects.equals(userName, admin.userName) && Objects.equals(password, admin.password);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstName, lastName, userName, password);
     }
 }

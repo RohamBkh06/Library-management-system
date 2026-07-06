@@ -36,7 +36,7 @@ public final class SupporterMenu {
                     case 3 -> viewAllFines();
                     case 4 -> searchUserById();
                     case 5 -> addItem();
-                    case 6 -> seeAllTickets();
+                    case 6 -> seeAllTickets(supporter);
                     case 7 -> {
                         return;
                     }
@@ -303,24 +303,30 @@ public final class SupporterMenu {
         }
     }
 
-    public static void seeAllTickets(){
+    public static void seeAllTickets(Supporter supporter){
         while (true){
-            ConsoleStyle.clearScreen();
-            for (SupportTicket ticket : LibraryManger.getInstance().getAllTickets()) {
-                System.out.println(ConsoleStyle.YELLOW + ticket + ConsoleStyle.RESET + "\n");
-            }
-            System.out.println();
+            try {
+                ConsoleStyle.clearScreen();
+                for (SupportTicket ticket : LibraryManger.getInstance().getAllTickets()) {
+                    if (supporter.getDepartments().contains(ticket.getDepartment())){
+                    System.out.println(ConsoleStyle.YELLOW + ticket + ConsoleStyle.RESET + "\n");
+                    }
+                }
+                System.out.println();
 
-            String id = ScannerWrapper.nextLine("Enter the ticket id to answer(Leave empty to return): ");
-            if (id.isBlank()){
-                return;
-            } else{
-                String answer = ScannerWrapper.nextLine("Enter the answer: ");
-                LibraryManger.getInstance().getTicketById().get(id).setAnswer(answer);
-                System.out.println(ConsoleStyle.GREEN + "Ticket answered successfully" + ConsoleStyle.RESET);
+                String id = ScannerWrapper.nextLine("Enter the ticket id to answer(Leave empty to return): ");
+                if (id.isBlank()){
+                    return;
+                } else{
+                    String answer = ScannerWrapper.nextLine("Enter the answer: ");
+                    supporter.answer(LibraryManger.getInstance().getTicketById().get(id), answer);
+                    System.out.println(ConsoleStyle.GREEN + "Ticket answered successfully" + ConsoleStyle.RESET);
+                    ScannerWrapper.pause();
+                }
+            } catch (Exception e) {
+                System.out.println(ConsoleStyle.RED + e.getMessage() + ConsoleStyle.RESET);
                 ScannerWrapper.pause();
             }
         }
-
     }
 }

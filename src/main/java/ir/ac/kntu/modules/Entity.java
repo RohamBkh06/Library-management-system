@@ -6,4 +6,6 @@ public interface Entity {
     String getLastName();
 
     String getPassword();
+
+    String toString();
 }
