@@ -1,4 +1,4 @@
-package ir.ac.kntu.main;
+package ir.ac.kntu.modules;
 
 public enum ReservationStatus {
     WAITING, ACTIVE, EXPIRED, CANCELED, COMPLETED

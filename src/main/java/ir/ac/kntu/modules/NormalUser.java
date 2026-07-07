@@ -1,8 +1,6 @@
 package ir.ac.kntu.modules;
 
 import ir.ac.kntu.main.LibraryManger;
-import ir.ac.kntu.main.Reservation;
-import ir.ac.kntu.main.ReservationStatus;
 import ir.ac.kntu.util.SystemProperties;
 import ir.ac.kntu.util.Validator;
 

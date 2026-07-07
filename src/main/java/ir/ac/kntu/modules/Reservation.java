@@ -1,7 +1,5 @@
-package ir.ac.kntu.main;
+package ir.ac.kntu.modules;
 
-import ir.ac.kntu.modules.LibraryItem;
-import ir.ac.kntu.modules.NormalUser;
 import ir.ac.kntu.util.IdGenerator;
 
 import java.time.LocalDate;
@@ -36,6 +34,13 @@ public class Reservation {
         this.item.removeFromQueue(this);
     }
 
+    public void setStatus(ReservationStatus status) {
+        this.status = status;
+    }
+
+    public void setActivationDate(LocalDate activationDate) {
+        this.activationDate = activationDate;
+    }
 
     @Override
     public boolean equals(Object obj) {

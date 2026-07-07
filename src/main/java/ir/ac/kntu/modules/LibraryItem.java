@@ -1,6 +1,5 @@
 package ir.ac.kntu.modules;
 
-import ir.ac.kntu.main.Reservation;
 import ir.ac.kntu.util.Validator;
 
 import java.util.ArrayDeque;
