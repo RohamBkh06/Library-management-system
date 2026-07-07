@@ -25,10 +25,12 @@ public class Admin implements Entity{
         return creator;
     }
 
+    @Override
     public String getFirstName() {
         return firstName;
     }
 
+    @Override
     public String getLastName() {
         return lastName;
     }
@@ -37,6 +39,7 @@ public class Admin implements Entity{
         return userName;
     }
 
+    @Override
     public String getPassword() {
         return password;
     }
@@ -96,7 +99,9 @@ public class Admin implements Entity{
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == null || getClass() != obj.getClass()) return false;
+        if (obj == null || getClass() != obj.getClass()){
+            return false;
+        }
         Admin admin = (Admin) obj;
         return Objects.equals(firstName, admin.firstName) && Objects.equals(lastName, admin.lastName) && Objects.equals(userName, admin.userName) && Objects.equals(password, admin.password);
     }

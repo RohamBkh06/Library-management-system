@@ -34,6 +34,7 @@ public class Supporter implements Entity{
         ticket.setAnswer(message);
     }
 
+    @Override
     public String getPassword() {
         return password;
     }
@@ -42,10 +43,12 @@ public class Supporter implements Entity{
         return userName;
     }
 
+    @Override
     public String getFirstName() {
         return firstName;
     }
 
+    @Override
     public String getLastName() {
         return lastName;
     }

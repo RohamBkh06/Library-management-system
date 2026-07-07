@@ -7,5 +7,6 @@ public interface Entity {
 
     String getPassword();
 
+    @Override
     String toString();
 }

@@ -7,7 +7,6 @@ import ir.ac.kntu.util.HtmlReportGenerator;
 import ir.ac.kntu.util.ScannerWrapper;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
 
 public class App {
@@ -138,7 +137,7 @@ public class App {
                             return;
                         }
                         Admin admin = LibraryManger.getInstance().loginAdmin(password);
-                        //adminMenu
+                        AdminMenu.show(admin);
                     }
                     case 3-> {
                         String id = ScannerWrapper.nextLine("User ID: " + ConsoleStyle.PURPLE + "Leave Empty to return." + ConsoleStyle.RESET);

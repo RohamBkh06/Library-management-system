@@ -43,9 +43,9 @@ public class Fine {
     public String toString() {
         return "Fine{ " +
                 "id= " + id +
-                ", borrowedItem= " + borrowedItem +
-                ", is paid= " + ((this.getPaymentDate() == null) ? "No" : "Yes") +
-                ", paymentDate= " + paymentDate +
+                ", borrowedItem= " + borrowedItem + "\n" +
+                ", is paid= " + (this.isPaid() ? "Yes" : "No") +
+                (this.isPaid() ? ", Payment Date= " + paymentDate : ", Amount= " + this.getAmount()) +
                 " }";
     }
 }

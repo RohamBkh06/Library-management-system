@@ -5,8 +5,8 @@ import ir.ac.kntu.modules.*;
 public final class PaymentService {
 
     public static void payFine(Fine fine, NormalUser user){
-        user.getWallet().withdraw(fine.getAmount());
         fine.pay();
+        user.getWallet().withdraw(fine.getAmount());
         Transaction transaction = new Transaction(fine.getAmount(), TransactionType.FINE_PAYMENT, fine.getId());
         user.getWallet().addTransaction(transaction);
     }

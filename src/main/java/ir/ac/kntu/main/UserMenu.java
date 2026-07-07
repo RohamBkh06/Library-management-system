@@ -169,12 +169,56 @@ public final class UserMenu {
     }
 
     private static void seeFines(NormalUser user) {
-        ConsoleStyle.clearScreen();
-        if (user.getFines().isEmpty()){
+        if (user.getFines().isEmpty()) {
             System.out.println(ConsoleStyle.CYAN + "You have no Unpaid fines!" + ConsoleStyle.RESET);
+            ScannerWrapper.pause();
+            return;
         }
-        for (Fine fine : user.getFines()) {
-            System.out.println(ConsoleStyle.YELLOW + fine + ConsoleStyle.RESET + "\n");
+        Pagination<Fine> pagination = new Pagination<>(user.getFines());
+        while (true) {
+            ConsoleStyle.clearScreen();
+            System.out.println("--------Page " + pagination.getCurrentPageNumber() + "/" + pagination.gerTotalPageNumber() + "--------");
+            for (Fine fine : pagination.getCurrentPage()) {
+                System.out.println(ConsoleStyle.YELLOW + fine + ConsoleStyle.RESET);
+            }
+            System.out.println(
+                    "==============================\n" + ConsoleStyle.BG_WHITE + ConsoleStyle.CYAN +
+                            "1. pay a fine     \n" +
+                            (pagination.hasNextPage() ? "N. Next Page      \n" : "") +
+                            (pagination.hasPreviousPage() ? "P. Previous Page  \n" : "") +
+                            "E. Exit             " + ConsoleStyle.RESET);
+            String select = ScannerWrapper.nextLine(selectionString);
+            switch (select.toLowerCase()) {
+                case "1" -> payFine(user);
+                case "n" -> pagination.nextPage();
+                case "p" -> pagination.previousPage();
+                case "e" -> {
+                    return;
+                }
+                default -> {
+                    ScannerWrapper.rewritePrompt(selcetionError);
+                    ScannerWrapper.pause();
+                }
+            }
+        }
+    }
+
+    private static void payFine(NormalUser user){
+        try {
+            String id = ScannerWrapper.nextLine("Enter fine ID: ");
+            Fine fine = null;
+            for (Fine userFine : user.getFines()) {
+                if (userFine.getId().equalsIgnoreCase(id)){
+                    fine = userFine;
+                }
+            }
+            if (fine == null){
+                throw new IllegalStateException("Fine not found");
+            }
+            PaymentService.payFine(fine, user);
+            System.out.println(ConsoleStyle.GREEN + "Fine paid successfully" + ConsoleStyle.RESET);
+        } catch (Exception e) {
+            System.out.println(ConsoleStyle.RED + e.getMessage() + ConsoleStyle.RESET);
         }
         ScannerWrapper.pause();
     }

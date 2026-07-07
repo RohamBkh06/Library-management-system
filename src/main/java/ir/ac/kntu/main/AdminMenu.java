@@ -6,7 +6,6 @@ import ir.ac.kntu.util.Pagination;
 import ir.ac.kntu.util.ScannerWrapper;
 import ir.ac.kntu.util.SystemProperties;
 
-import javax.swing.*;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -135,6 +134,7 @@ public final class AdminMenu {
             ScannerWrapper.pause();
         }
     }
+    
     private static void editUser() {
         ConsoleStyle.clearScreen();
         try {
@@ -564,7 +564,7 @@ public final class AdminMenu {
                     case 4 ->{
                         String value = ScannerWrapper.nextLine("New Password: ");
                         LibraryManger.getInstance().getAdminByPassword().remove(target.getPassword());
-                        target.setPassword(password);
+                        target.setPassword(value);
                         LibraryManger.getInstance().getAdminByPassword().put(target.getPassword(), target);
                     }
                     case 5 ->{
@@ -597,7 +597,6 @@ public final class AdminMenu {
                             (pagination.hasNextPage() ? "N. Next Page        \n" : "") +
                             (pagination.hasPreviousPage() ? "P. Previous Page    \n" : "") +
                             "E. Exit               " + ConsoleStyle.RESET);
-
             String select = ScannerWrapper.nextLine(SELECTION);
             switch (select.toLowerCase()) {
                 case "n" -> pagination.nextPage();

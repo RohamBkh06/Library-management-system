@@ -1,12 +1,17 @@
 package ir.ac.kntu.modules;
 
+import ir.ac.kntu.main.Reservation;
 import ir.ac.kntu.util.Validator;
+
+import java.util.ArrayDeque;
+import java.util.Queue;
 
 public abstract class LibraryItem {
     private String title;
     private String id;
     private int publishYear;
     private String category;
+    private Queue<Reservation> waitingQueue;
 
     protected abstract boolean lend();
 
@@ -25,6 +30,19 @@ public abstract class LibraryItem {
         setPublishYear(publishYear);
         this.title = title;
         this.category = category;
+        this.waitingQueue = new ArrayDeque<>();
+    }
+
+    public Reservation getActiveReservation(){
+        return this.waitingQueue.peek();
+    }
+
+    public void addToAQueue(Reservation reservation){
+        this.waitingQueue.add(reservation);
+    }
+
+    public void removeFromQueue(Reservation reservation){
+        this.waitingQueue.remove(reservation);
     }
 
     public void setId(String id) {

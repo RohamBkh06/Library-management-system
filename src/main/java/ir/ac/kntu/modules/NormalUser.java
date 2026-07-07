@@ -1,12 +1,12 @@
 package ir.ac.kntu.modules;
 
 import ir.ac.kntu.main.LibraryManger;
+import ir.ac.kntu.main.Reservation;
+import ir.ac.kntu.main.ReservationStatus;
+import ir.ac.kntu.util.SystemProperties;
 import ir.ac.kntu.util.Validator;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public abstract class NormalUser implements Entity {
     private String firstName;
@@ -17,14 +17,15 @@ public abstract class NormalUser implements Entity {
     private String password;
     private boolean isActive;
     private Wallet wallet;
-    private Map<String, Borrowed> allBorrows;
+    private Map<String, Borrowed> borrowById;
     private List<SupportTicket> ticketList;
+    private Map<String, Reservation> reservationById;
 
     public abstract int getBorrowLimit();
 
     public int activeBorrows(){
         int counter = 0;
-        for (Borrowed borrowed : allBorrows.values()) {
+        for (Borrowed borrowed : borrowById.values()) {
             if (!borrowed.isReturned()){
                 counter++;
             }
@@ -40,13 +41,32 @@ public abstract class NormalUser implements Entity {
         } else if (!item.lend()){
             throw new IllegalStateException("Item not available");
         } else{
+            if (item.getActiveReservation() != null){
+                if (reservationById.containsValue(item.getActiveReservation())){
+                    item.getActiveReservation().borrowReserved();
+                }
+            }
             Borrowed borrowed = new Borrowed(item, this);
-            allBorrows.put(borrowed.getId(), borrowed);
+            borrowById.put(borrowed.getId(), borrowed);
         }
     }
 
     public void returnItem(Borrowed borrowed){
         borrowed.returnBorrow();
+    }
+
+    public void reserveItem(LibraryItem item){
+        if (this.getWaitingReservations().size() > SystemProperties.getReserveLimit()){
+            throw new IllegalStateException("Reserve limit exceeded");
+        }
+        Reservation reservation = new Reservation(item, this);
+        for (Reservation value : reservationById.values()) {
+            if (value.equals2(reservation) && (value.getStatus() == ReservationStatus.ACTIVE || value.getStatus() == ReservationStatus.WAITING)){
+                throw new IllegalStateException("Item already reserved.");
+            }
+        }
+        reservationById.put(reservation.getId(), reservation);
+        item.addToAQueue(reservation);
     }
 
     protected NormalUser(String firstName, String lastName, String id, String email, String phoneNum,String password){
@@ -57,8 +77,9 @@ public abstract class NormalUser implements Entity {
         this.setFirstName(firstName);
         this.setLastName(lastName);
         this.wallet = new Wallet();
-        this.allBorrows = new HashMap<>();
+        this.borrowById = new HashMap<>();
         this.ticketList = new ArrayList<>();
+        this.reservationById = new HashMap<>();
         this.isActive = true;
 
     }
@@ -102,7 +123,7 @@ public abstract class NormalUser implements Entity {
 
     public List<Fine> getFines(){
         List<Fine> ans = new ArrayList<>();
-        for (Borrowed item : this.allBorrows.values()) {
+        for (Borrowed item : this.borrowById.values()) {
             if (!item.getFine().isPaid()){
                 ans.add(item.getFine());
             }
@@ -115,11 +136,11 @@ public abstract class NormalUser implements Entity {
     }
 
     public Map<String, Borrowed> getBorrowedMap() {
-        return new HashMap<>(allBorrows);
+        return new HashMap<>(borrowById);
     }
 
     public List<Borrowed> getBorrowedList() {
-        return new ArrayList<>(allBorrows.values());
+        return new ArrayList<>(borrowById.values());
     }
 
     public void requestSupport(String message, Department type){
@@ -129,7 +150,7 @@ public abstract class NormalUser implements Entity {
     }
 
     public boolean hasUnpaidFine(){
-        for (Borrowed borrowed : allBorrows.values()) {
+        for (Borrowed borrowed : borrowById.values()) {
             if (!borrowed.getFine().isPaid()){
                 return true;
             }
@@ -145,10 +166,12 @@ public abstract class NormalUser implements Entity {
         return email;
     }
 
+    @Override
     public String getFirstName() {
         return firstName;
     }
 
+    @Override
     public String getLastName() {
         return lastName;
     }
@@ -157,12 +180,13 @@ public abstract class NormalUser implements Entity {
         return phoneNum;
     }
 
+    @Override
     public String getPassword() {
         return password;
     }
 
-    public Map<String, Borrowed> getAllBorrows() {
-        return allBorrows;
+    public Map<String, Borrowed> getBorrowById() {
+        return borrowById;
     }
 
     public List<SupportTicket> getTicketList() {
@@ -177,8 +201,36 @@ public abstract class NormalUser implements Entity {
         isActive = !isActive;
     }
 
+    public Map<String, Reservation> getReservationById() {
+        return new HashMap<>(reservationById);
+    }
+
+    public List<Reservation> getWaitingReservations(){
+        List<Reservation> ans = new ArrayList<>();
+        for (Reservation value : reservationById.values()) {
+            if (value.getStatus() == ReservationStatus.WAITING){
+                ans.add(value);
+            }
+        }
+        return ans;
+    }
+
     @Override
     public String toString() {
         return "Role: User{ " + "firstName= " + firstName + ", lastName= " + lastName + ", id= " + id + ", email= " + email + ", phoneNum= " + phoneNum + "Status= "+ (isActive ? "Active" : "Inactive") + " }";
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || getClass() != obj.getClass()){
+            return false;
+        }
+        NormalUser that = (NormalUser) obj;
+        return Objects.equals(id, that.id) && Objects.equals(password, that.password);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, password);
     }
 }
