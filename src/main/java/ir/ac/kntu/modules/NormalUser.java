@@ -40,9 +40,10 @@ public abstract class NormalUser implements Entity {
             throw new IllegalStateException("Item not available");
         } else{
             if (item.getActiveReservation() != null){
-                if (reservationById.containsValue(item.getActiveReservation())){
-                    item.getActiveReservation().borrowReserved();
+                if (!reservationById.containsValue(item.getActiveReservation())){
+                    throw new IllegalStateException("This reservation is not yet active.");
                 }
+                    item.getActiveReservation().borrowReserved();
             }
             Borrowed borrowed = new Borrowed(item, this);
             borrowById.put(borrowed.getId(), borrowed);

@@ -1,8 +1,10 @@
 package ir.ac.kntu.modules;
 
 import ir.ac.kntu.util.IdGenerator;
+import ir.ac.kntu.util.SystemProperties;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
 public class Reservation {
@@ -71,7 +73,9 @@ public class Reservation {
                 ", item= " + item +
                 ", reservor= " + reservor +
                 ", status= " + status +
-                '}';
+                (status == ReservationStatus.ACTIVE ? ", Expire Date= "
+        + ChronoUnit.DAYS.addTo(activationDate, SystemProperties.getReserveExpireDays()) : "") +
+                " }";
     }
 
     public String getId() {

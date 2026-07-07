@@ -23,10 +23,11 @@ public final class UserMenu {
                             "1. See LibraryItems     \n" +
                             "2. Wallet               \n" +
                             "3. See BorrowedItems    \n" +
-                            "4. Setting              \n" +
-                            "5. Support              \n" +
-                            "6. see SupportTickets   \n" +
-                            "7. Return               \n" +
+                            "4. see Reservations     \n" +
+                            "5. Setting              \n" +
+                            "6. Support              \n" +
+                            "7. see SupportTickets   \n" +
+                            "8. Return               \n" +
                             ConsoleStyle.RESET
             );
 
@@ -35,10 +36,11 @@ public final class UserMenu {
                 case 1 -> seeLibraryItems(user);
                 case 2 -> seeWallet(user);
                 case 3 -> seeBorrowedItems(user);
-                case 4 -> setting(user);
-                case 5 -> support(user);
-                case 6 -> seeSupportTickets(user);
-                case 7 -> {
+                case 4 -> seeReservations(user);
+                case 5 -> setting(user);
+                case 6 -> support(user);
+                case 7 -> seeSupportTickets(user);
+                case 8 -> {
                     return;
                 }
                 default -> {
@@ -59,14 +61,16 @@ public final class UserMenu {
             System.out.println();
             System.out.println(
                     ConsoleStyle.BG_WHITE + ConsoleStyle.BLUE +
-                            "Filter by:        \n" +
-                            "1. title          \n" +
-                            "2. category       \n" +
-                            "3. publish year   \n" +
-                            "======page " + pagination.getCurrentPageNumber() + "/" + pagination.gerTotalPageNumber() + "======\n" +
-                            (pagination.hasNextPage() ? "n. Next page      \n" : "") +
-                            (pagination.hasPreviousPage() ? "p. Previous page  \n" : "") +
-                            "5. return         \n" +
+                            "Filter by:         \n" +
+                            "1. title           \n" +
+                            "2. category        \n" +
+                            "3. publish year    \n" +
+                            "4. borrow an item  \n" +
+                            "5. reserve an item \n" +
+                            "====== page " + pagination.getCurrentPageNumber() + "/" + pagination.gerTotalPageNumber() + "======\n" +
+                            (pagination.hasNextPage() ? "n. Next page       \n" : "") +
+                            (pagination.hasPreviousPage() ? "p. Previous page   \n" : "") +
+                            "6. return          \n" +
                             ConsoleStyle.RESET
             );
 
@@ -77,9 +81,10 @@ public final class UserMenu {
                 case "2" -> filterByCategory();
                 case "3" -> filterByPublishYear();
                 case "4" -> borrowItem(user);
+                case "5" -> reserveItem(user);
                 case "n" -> pagination.nextPage();
                 case "p" -> pagination.previousPage();
-                case "5" -> {
+                case "6" -> {
                     return;
                 }
                 default -> {
@@ -260,6 +265,93 @@ public final class UserMenu {
                 System.out.println(ConsoleStyle.RED + e.getMessage() + ConsoleStyle.RESET);
                 ScannerWrapper.pause();
             }
+        }
+    }
+
+    private static void seeReservations(NormalUser user) {
+        if (user.getReservationById().isEmpty()) {
+            System.out.println(ConsoleStyle.CYAN + "You have no Reservations so far." + ConsoleStyle.RESET);
+            ScannerWrapper.pause();
+            return;
+        }
+        Pagination<Reservation> pagination = new Pagination<>(user.getReservationById().values().stream().toList());
+        while (true) {
+            ConsoleStyle.clearScreen();
+            System.out.println("--------Page " + pagination.getCurrentPageNumber() + "/" + pagination.gerTotalPageNumber() + "--------");
+            for (Reservation reservation : user.getReservationById().values()) {
+                System.out.println(ConsoleStyle.YELLOW + reservation + ConsoleStyle.RESET);
+            }
+            System.out.println(
+                    "==============================\n" + ConsoleStyle.BG_WHITE + ConsoleStyle.CYAN +
+                            "1. borrow a reservation \n" +
+                            "2. Cancel a reservation \n" +
+                            (pagination.hasNextPage() ? "N. Next Page            \n" : "") +
+                            (pagination.hasPreviousPage() ? "P. Previous Page        \n" : "") +
+                            "E. Exit                   " + ConsoleStyle.RESET);
+            String select = ScannerWrapper.nextLine(selectionString);
+            switch (select.toLowerCase()) {
+                case "1" -> borrowReservation(user);
+                case "2" -> cancelReservation(user);
+                case "n" -> pagination.nextPage();
+                case "p" -> pagination.previousPage();
+                case "e" -> {
+                    return;
+                }
+                default -> {
+                    ScannerWrapper.rewritePrompt(selcetionError);
+                    ScannerWrapper.pause();
+                }
+            }
+        }
+    }
+
+    private static void borrowReservation(NormalUser user){
+        String id = ScannerWrapper.nextLine("Reservation ID: ");
+        Reservation reservation = user.getReservationById().get(id);
+        try {
+            if (reservation == null) {
+                throw new IllegalArgumentException("Item not found");
+            }
+            user.borrowItem(reservation.getItem());
+            System.out.println(ConsoleStyle.GREEN + "Item Reserved successfully" + ConsoleStyle.RESET);
+            ScannerWrapper.pause();
+        } catch (RuntimeException e) {
+            System.out.println(ConsoleStyle.RED + e.getMessage() + ConsoleStyle.RESET);
+            ScannerWrapper.pause();
+        }
+    }
+
+    private static void cancelReservation(NormalUser user){
+        String id = ScannerWrapper.nextLine("Reservation ID: ");
+        Reservation reservation = user.getReservationById().get(id);
+        try {
+            if (reservation == null) {
+                throw new IllegalArgumentException("Item not found");
+            }
+            reservation.cancelReservation();
+            System.out.println(ConsoleStyle.GREEN + "Reservation canceled successfully" + ConsoleStyle.RESET);
+            ScannerWrapper.pause();
+        } catch (RuntimeException e) {
+            System.out.println(ConsoleStyle.RED + e.getMessage() + ConsoleStyle.RESET);
+            ScannerWrapper.pause();
+        }
+    }
+
+
+
+    private static void reserveItem(NormalUser user) {
+        String title = ScannerWrapper.nextLine("Item title: ");
+        LibraryItem item = Catalog.getInstance().getItem(title);
+        try {
+            if (item == null) {
+                throw new IllegalArgumentException("Item not found");
+            }
+            user.reserveItem(item);
+            System.out.println(ConsoleStyle.GREEN + "Item Reserved successfully" + ConsoleStyle.RESET);
+            ScannerWrapper.pause();
+        } catch (RuntimeException e) {
+            System.out.println(ConsoleStyle.RED + e.getMessage() + ConsoleStyle.RESET);
+            ScannerWrapper.pause();
         }
     }
 
