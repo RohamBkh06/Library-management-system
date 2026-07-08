@@ -2,7 +2,12 @@ package ir.ac.kntu.modules;
 
 import ir.ac.kntu.util.IdGenerator;
 
-public class SupportTicket {
+import java.io.Serializable;
+
+public class SupportTicket implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     private NormalUser user;
     private String id;
     private Department department;

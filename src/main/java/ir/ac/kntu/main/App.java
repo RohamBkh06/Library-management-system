@@ -1,10 +1,7 @@
 package ir.ac.kntu.main;
 
 import ir.ac.kntu.modules.*;
-import ir.ac.kntu.util.ConsoleStyle;
-import ir.ac.kntu.util.EmailService;
-import ir.ac.kntu.util.HtmlReportGenerator;
-import ir.ac.kntu.util.ScannerWrapper;
+import ir.ac.kntu.util.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -28,6 +25,7 @@ public class App {
 
     public static void main(String[] args) {
         test();
+        SaveLoadManager.load();
         while(true){
             ConsoleStyle.clearScreen();
             System.out.println(ConsoleStyle.BOLD + ConsoleStyle.CYAN +
@@ -166,6 +164,7 @@ public class App {
     public static void finishProgram(){
         ScannerWrapper.close();
         try {
+            SaveLoadManager.save();
             HtmlReportGenerator.generateReport("report.html");
             System.out.println("Report generated successfully.");
         } catch (IOException e) {

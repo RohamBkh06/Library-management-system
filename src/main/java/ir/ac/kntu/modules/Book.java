@@ -2,7 +2,12 @@ package ir.ac.kntu.modules;
 
 import ir.ac.kntu.util.Validator;
 
-public class Book extends LibraryItem{
+import java.io.Serializable;
+
+public class Book extends LibraryItem implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     private String author;
     private int pageCount;
     private long availableCopies;

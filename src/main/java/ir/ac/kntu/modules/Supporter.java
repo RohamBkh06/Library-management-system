@@ -1,10 +1,14 @@
 package ir.ac.kntu.modules;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Supporter implements Entity{
+public class Supporter implements Entity, Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     private String firstName;
     private String lastName;
     private String userName;

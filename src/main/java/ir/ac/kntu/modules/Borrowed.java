@@ -3,9 +3,13 @@ package ir.ac.kntu.modules;
 import ir.ac.kntu.util.IdGenerator;
 import ir.ac.kntu.util.SystemProperties;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Borrowed {
+public class Borrowed implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     private NormalUser borrower;
     private String id;
     private LibraryItem item;

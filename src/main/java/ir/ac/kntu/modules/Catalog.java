@@ -1,9 +1,13 @@
 package ir.ac.kntu.modules;
 
+import java.io.Serializable;
 import java.util.*;
 import java.util.function.Predicate;
 
-public class Catalog {
+public class Catalog implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     private static Catalog instance;
     private final List<LibraryItem> items;
     private final Map<String, LibraryItem> itemsByTitle;
@@ -19,6 +23,10 @@ public class Catalog {
             instance = new Catalog();
         }
         return instance;
+    }
+
+    public static void setInstance(Catalog catalog){
+        instance = catalog;
     }
 
     public void addItem(LibraryItem item){

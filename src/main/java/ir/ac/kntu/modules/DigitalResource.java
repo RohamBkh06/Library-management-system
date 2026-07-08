@@ -2,7 +2,11 @@ package ir.ac.kntu.modules;
 
 import ir.ac.kntu.util.Validator;
 
-public abstract class DigitalResource extends LibraryItem {
+import java.io.Serializable;
+
+public abstract class DigitalResource extends LibraryItem implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private DigitalFormat format;
     private double size;

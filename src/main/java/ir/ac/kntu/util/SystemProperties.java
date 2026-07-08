@@ -2,50 +2,70 @@ package ir.ac.kntu.util;
 
 import ir.ac.kntu.modules.Admin;
 
-public final class SystemProperties {
-    private static int baseBorrowTime = 14;
-    private static int reserveLimit=4;
-    private static int reserveExpireDays=3;
-    private static double baseFineRate=50_000;
-    private static double dailyFineRate =10_000;
+import java.io.Serializable;
 
-    public static int getBaseBorrowTime() {
+public final class SystemProperties implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    private int baseBorrowTime = 14;
+    private int reserveLimit=4;
+    private int reserveExpireDays=3;
+    private double baseFineRate=50_000;
+    private double dailyFineRate =10_000;
+
+    private static SystemProperties instance;
+
+    private SystemProperties(){}
+
+    public static SystemProperties getInstance(){
+        if (instance == null){
+            instance = new SystemProperties();
+        }
+        return instance;
+    }
+
+    public static void setInstance(SystemProperties systemProperties){
+        instance = systemProperties;
+    }
+
+    public int getBaseBorrowTime() {
         return baseBorrowTime;
     }
 
-    public static int getReserveLimit() {
+    public int getReserveLimit() {
         return reserveLimit;
     }
 
-    public static int getReserveExpireDays() {
+    public int getReserveExpireDays() {
         return reserveExpireDays;
     }
 
-    public static double getBaseFineRate() {
+    public double getBaseFineRate() {
         return baseFineRate;
     }
 
-    public static double getDailyFineRate() {
+    public double getDailyFineRate() {
         return dailyFineRate;
     }
 
-    public static void setBaseBorrowTime(Admin admin, int baseBorrowTime) {
+    public void setBaseBorrowTime(Admin admin, int baseBorrowTime) {
         SystemProperties.baseBorrowTime = baseBorrowTime;
     }
 
-    public static void setReserveLimit(Admin admin, int reserveLimit) {
+    public void setReserveLimit(Admin admin, int reserveLimit) {
         SystemProperties.reserveLimit = reserveLimit;
     }
 
-    public static void setReserveExpireDays(Admin admin, int reserveExpireDays) {
+    public void setReserveExpireDays(Admin admin, int reserveExpireDays) {
         SystemProperties.reserveExpireDays = reserveExpireDays;
     }
 
-    public static void setBaseFineRate(Admin admin, double baseFineRate) {
+    public void setBaseFineRate(Admin admin, double baseFineRate) {
         SystemProperties.baseFineRate = baseFineRate;
     }
 
-    public static void setDailyFineRate(Admin admin, double dailyFineRate) {
+    public void setDailyFineRate(Admin admin, double dailyFineRate) {
         SystemProperties.dailyFineRate = dailyFineRate;
     }
 }

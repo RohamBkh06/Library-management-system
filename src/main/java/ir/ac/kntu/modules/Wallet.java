@@ -1,10 +1,14 @@
 package ir.ac.kntu.modules;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Wallet {
+public class Wallet implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     private double balance;
     private List<Transaction> transactions;
 

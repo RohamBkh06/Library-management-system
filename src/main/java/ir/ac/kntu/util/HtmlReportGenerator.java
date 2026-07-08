@@ -220,6 +220,36 @@ public final class HtmlReportGenerator {
                 """);
 
         html.append("""
+                <div class="section">
+
+                <h2>All Entities</h2>
+
+                <table>
+
+                    <tr>
+                        <th>Users</th>
+                        <th>Supporters</th>
+                        <th>Admins</th>
+                    </tr>
+
+                    <tr>
+                """);
+
+        html.append("<td>").append(manager.getUserById().size()).append("</td>");
+        html.append("<td>").append(manager.getSupporterByPassword().size()).append("</td>");
+        html.append("<td>").append(manager.getAdminByPassword().size()).append("</td>");
+
+        html.append("""
+                    </tr>
+
+                </table>
+
+                <canvas id="entityChart"></canvas>
+
+                </div>
+                """);
+
+        html.append("""
                 <script>
 
                 new Chart(
@@ -317,10 +347,33 @@ public final class HtmlReportGenerator {
         html.append(students).append(",").append(faculty).append(",").append(guests);
 
         html.append("""
+                new Chart(
+                    document.getElementById('entityChart'),
+                    {
+                        type:'pie',
+                        data:{
+                            labels:[
+                                'Users',
+                                'Supporters',
+                                'Admins'
+                            ],
+                            datasets:[{
+                                data:[
+                """);
+
+        html.append(manager.getUserById().size())
+                .append(",")
+                .append(manager.getSupporterByPassword().size())
+                .append(",")
+                .append(manager.getAdminByPassword().size());
+
+        html.append("""
                                 ]
                             }]
                         }
                     }
+                );
+
                 );
 
                 </script>

@@ -2,10 +2,14 @@ package ir.ac.kntu.modules;
 
 import ir.ac.kntu.util.Validator;
 
+import java.io.Serializable;
 import java.util.ArrayDeque;
 import java.util.Queue;
 
-public abstract class LibraryItem {
+public abstract class LibraryItem implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     private String title;
     private String id;
     private int publishYear;

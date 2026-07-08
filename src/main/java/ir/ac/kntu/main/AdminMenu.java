@@ -655,11 +655,11 @@ public final class AdminMenu {
                             ConsoleStyle.BLUE +
                             "========== System Properties ==========\n" +
                             "Current Values:\n" +
-                            "Borrow Time: " + SystemProperties.getBaseBorrowTime() + "\n" +
-                            "Reserve Limit: " + SystemProperties.getReserveLimit() + "\n" +
-                            "Reserve Expire Days: " + SystemProperties.getReserveExpireDays() + "\n" +
-                            "Base Fine: " + SystemProperties.getBaseFineRate() + "\n" +
-                            "Daily Fine: " + SystemProperties.getDailyFineRate() + "\n\n" +
+                            "Borrow Time: " + SystemProperties.getInstance().getBaseBorrowTime() + "\n" +
+                            "Reserve Limit: " + SystemProperties.getInstance().getReserveLimit() + "\n" +
+                            "Reserve Expire Days: " + SystemProperties.getInstance().getReserveExpireDays() + "\n" +
+                            "Base Fine: " + SystemProperties.getInstance().getBaseFineRate() + "\n" +
+                            "Daily Fine: " + SystemProperties.getInstance().getDailyFineRate() + "\n\n" +
                             "=======================================\n\n" + ConsoleStyle.BG_WHITE +
                             "1. Borrow Time         \n" +
                             "2. Reserve Limit       \n" +
@@ -693,35 +693,35 @@ public final class AdminMenu {
 
     private static void updateBorrowTime(Admin admin){
         int value = ScannerWrapper.nextInt("Borrow Time (Days): ");
-        SystemProperties.setBaseBorrowTime(admin,value);
+        SystemProperties.getInstance().setBaseBorrowTime(admin,value);
         System.out.println(ConsoleStyle.GREEN + "Updated Successfully." + ConsoleStyle.RESET);
         ScannerWrapper.pause();
     }
 
     private static void updateReserveLimit(Admin admin){
         int value = ScannerWrapper.nextInt("Reserve Limit: ");
-        SystemProperties.setReserveLimit(admin,value);
+        SystemProperties.getInstance().setReserveLimit(admin,value);
         System.out.println(ConsoleStyle.GREEN + "Updated Successfully." + ConsoleStyle.RESET);
         ScannerWrapper.pause();
     }
 
     private static void updateReserveExpire(Admin admin){
         int value = ScannerWrapper.nextInt("Reserve Expire Days: ");
-        SystemProperties.setReserveExpireDays(admin,value);
+        SystemProperties.getInstance().setReserveExpireDays(admin,value);
         System.out.println(ConsoleStyle.GREEN + "Updated Successfully." + ConsoleStyle.RESET);
         ScannerWrapper.pause();
     }
 
     private static void updateBaseFine(Admin admin){
         double value = ScannerWrapper.nextDouble("Base Fine: ");
-        SystemProperties.setBaseFineRate(admin,value);
+        SystemProperties.getInstance().setBaseFineRate(admin,value);
         System.out.println(ConsoleStyle.GREEN + "Updated Successfully." + ConsoleStyle.RESET);
         ScannerWrapper.pause();
     }
 
     private static void updateDailyFine(Admin admin){
         double value = ScannerWrapper.nextDouble("Daily Fine: ");
-        SystemProperties.setDailyFineRate(admin,value);
+        SystemProperties.getInstance().setDailyFineRate(admin,value);
         System.out.println(ConsoleStyle.GREEN + "Updated Successfully." + ConsoleStyle.RESET);
         ScannerWrapper.pause();
     }

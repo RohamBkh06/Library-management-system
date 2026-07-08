@@ -2,10 +2,14 @@ package ir.ac.kntu.main;
 
 import ir.ac.kntu.modules.*;
 
+import java.io.Serializable;
 import java.util.*;
 import java.util.function.Predicate;
 
-public class LibraryManger {
+public class LibraryManger implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     private static LibraryManger instance;
     private Map<String, NormalUser> userById;
     private Map<String, Supporter> supporterByPassword;
@@ -25,6 +29,10 @@ public class LibraryManger {
             instance = new LibraryManger();
         }
         return instance;
+    }
+
+    public static void setInstance(LibraryManger manager){
+        instance = manager;
     }
 
     public void addTicket(SupportTicket ticket){

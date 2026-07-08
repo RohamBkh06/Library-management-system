@@ -2,7 +2,12 @@ package ir.ac.kntu.modules;
 
 import ir.ac.kntu.util.Validator;
 
-public class Magazine extends LibraryItem{
+import java.io.Serializable;
+
+public class Magazine extends LibraryItem implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     private long availableCopies;
     private String issn;
     private PublicationFrequency frequency;

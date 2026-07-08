@@ -4,9 +4,13 @@ import ir.ac.kntu.main.LibraryManger;
 import ir.ac.kntu.util.SystemProperties;
 import ir.ac.kntu.util.Validator;
 
+import java.io.Serializable;
 import java.util.*;
 
-public abstract class NormalUser implements Entity {
+public abstract class NormalUser implements Entity, Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     private String firstName;
     private String lastName;
     private String id;

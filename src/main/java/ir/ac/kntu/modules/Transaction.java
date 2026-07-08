@@ -1,8 +1,12 @@
 package ir.ac.kntu.modules;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Transaction {
+public class Transaction implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     private double amount;
     private TransactionType type;
     private LocalDate issueDate;

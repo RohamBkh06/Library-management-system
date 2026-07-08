@@ -3,11 +3,15 @@ package ir.ac.kntu.modules;
 import ir.ac.kntu.util.IdGenerator;
 import ir.ac.kntu.util.SystemProperties;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
-public class Reservation {
+public class Reservation implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     private String id;
     private LibraryItem item;
     private NormalUser reservor;

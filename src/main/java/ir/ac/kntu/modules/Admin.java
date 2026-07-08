@@ -1,8 +1,12 @@
 package ir.ac.kntu.modules;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Admin implements Entity{
+public class Admin implements Entity, Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     private String firstName;
     private String lastName;
     private String userName;
