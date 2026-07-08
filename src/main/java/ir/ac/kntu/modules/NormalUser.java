@@ -59,7 +59,7 @@ public abstract class NormalUser implements Entity, Serializable {
     }
 
     public void reserveItem(LibraryItem item){
-        if (this.getWaitingReservations().size() > SystemProperties.getReserveLimit()){
+        if (this.getWaitingReservations().size() > SystemProperties.getInstance().getReserveLimit()){
             throw new IllegalStateException("Reserve limit exceeded");
         }
         Reservation reservation = new Reservation(item, this);

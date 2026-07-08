@@ -29,7 +29,7 @@ public class Book extends LibraryItem implements Serializable {
     }
 
     @Override
-    protected boolean lend() {
+    public boolean lend() {
         if (availableCopies > 0){
             availableCopies--;
             return true;

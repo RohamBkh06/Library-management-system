@@ -8,11 +8,11 @@ public final class SystemProperties implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private int baseBorrowTime = 14;
-    private int reserveLimit=4;
-    private int reserveExpireDays=3;
-    private double baseFineRate=50_000;
-    private double dailyFineRate =10_000;
+    private static int baseBorrowTime = 14;
+    private static int reserveLimit=4;
+    private static int reserveExpireDays=3;
+    private static double baseFineRate=50_000;
+    private static double dailyFineRate =10_000;
 
     private static SystemProperties instance;
 
@@ -50,23 +50,23 @@ public final class SystemProperties implements Serializable {
     }
 
     public void setBaseBorrowTime(Admin admin, int baseBorrowTime) {
-        SystemProperties.baseBorrowTime = baseBorrowTime;
+        SystemProperties.getInstance().baseBorrowTime = baseBorrowTime;
     }
 
     public void setReserveLimit(Admin admin, int reserveLimit) {
-        SystemProperties.reserveLimit = reserveLimit;
+        SystemProperties.getInstance().reserveLimit = reserveLimit;
     }
 
     public void setReserveExpireDays(Admin admin, int reserveExpireDays) {
-        SystemProperties.reserveExpireDays = reserveExpireDays;
+        SystemProperties.getInstance().reserveExpireDays = reserveExpireDays;
     }
 
     public void setBaseFineRate(Admin admin, double baseFineRate) {
-        SystemProperties.baseFineRate = baseFineRate;
+        SystemProperties.getInstance().baseFineRate = baseFineRate;
     }
 
     public void setDailyFineRate(Admin admin, double dailyFineRate) {
-        SystemProperties.dailyFineRate = dailyFineRate;
+        SystemProperties.getInstance().dailyFineRate = dailyFineRate;
     }
 }
 

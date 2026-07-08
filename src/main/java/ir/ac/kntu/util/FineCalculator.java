@@ -18,10 +18,10 @@ public final class FineCalculator {
             delay = ChronoUnit.DAYS.between(borrowed.getReturnDueDate(), borrowed.getFine().getPaymentDate());
         }
         if (delay > 0) {
-            ans = SystemProperties.getBaseFineRate();
+            ans = SystemProperties.getInstance().getBaseFineRate();
         }
         if (delay > 7) {
-            ans += (delay - 7) * SystemProperties.getDailyFineRate();
+            ans += (delay - 7) * SystemProperties.getInstance().getDailyFineRate();
         }
 
         return ans;

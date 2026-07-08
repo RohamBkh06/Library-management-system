@@ -40,7 +40,7 @@ public class Borrowed implements Serializable {
         this.borrower = borrower;
         this.id = IdGenerator.generateBorrowedId();
         this.borrowDate = LocalDate.now();
-        this.returnDueDate = this.borrowDate.plusDays(SystemProperties.getBaseBorrowTime());
+        this.returnDueDate = this.borrowDate.plusDays(SystemProperties.getInstance().getBaseBorrowTime());
         this.isReturned = false;
         this.fine = new Fine(this);
     }

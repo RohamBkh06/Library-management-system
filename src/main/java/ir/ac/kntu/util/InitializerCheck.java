@@ -21,7 +21,7 @@ public final class InitializerCheck implements Runnable {
 
     private void checkExpiration(Reservation reservation){
         if (reservation.getStatus() == ReservationStatus.ACTIVE ){
-            if (ChronoUnit.DAYS.between(reservation.getActivationDate(), LocalDate.now()) > SystemProperties.getReserveExpireDays()){
+            if (ChronoUnit.DAYS.between(reservation.getActivationDate(), LocalDate.now()) > SystemProperties.getInstance().getReserveExpireDays()){
                 reservation.setStatus(ReservationStatus.EXPIRED);
                 reservation.getItem().removeFromQueue(reservation);
             }

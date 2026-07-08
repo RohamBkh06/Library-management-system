@@ -78,7 +78,7 @@ public class Reservation implements Serializable {
                 ", reservor= " + reservor +
                 ", status= " + status +
                 (status == ReservationStatus.ACTIVE ? ", Expire Date= "
-        + ChronoUnit.DAYS.addTo(activationDate, SystemProperties.getReserveExpireDays()) : "") +
+        + ChronoUnit.DAYS.addTo(activationDate, SystemProperties.getInstance().getReserveExpireDays()) : "") +
                 " }";
     }
 
