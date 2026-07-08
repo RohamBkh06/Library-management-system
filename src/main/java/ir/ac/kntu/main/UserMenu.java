@@ -179,8 +179,8 @@ public final class UserMenu {
             ScannerWrapper.pause();
             return;
         }
-        Pagination<Fine> pagination = new Pagination<>(user.getFines());
         while (true) {
+            Pagination<Fine> pagination = new Pagination<>(user.getFines());
             ConsoleStyle.clearScreen();
             System.out.println("--------Page " + pagination.getCurrentPageNumber() + "/" + pagination.gerTotalPageNumber() + "--------");
             for (Fine fine : pagination.getCurrentPage()) {
@@ -274,8 +274,9 @@ public final class UserMenu {
             ScannerWrapper.pause();
             return;
         }
-        Pagination<Reservation> pagination = new Pagination<>(user.getReservationById().values().stream().toList());
         while (true) {
+            ConsoleStyle.clearScreen();
+            Pagination<Reservation> pagination = new Pagination<>(user.getReservationById().values().stream().toList());
             ConsoleStyle.clearScreen();
             System.out.println("--------Page " + pagination.getCurrentPageNumber() + "/" + pagination.gerTotalPageNumber() + "--------");
             for (Reservation reservation : user.getReservationById().values()) {

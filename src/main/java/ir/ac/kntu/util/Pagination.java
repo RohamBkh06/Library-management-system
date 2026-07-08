@@ -40,7 +40,7 @@ public final class Pagination<T> {
     }
 
     public int getCurrentPageNumber(){
-        return currentPage;
+        return currentPage+1;
     }
 
     public int gerTotalPageNumber(){

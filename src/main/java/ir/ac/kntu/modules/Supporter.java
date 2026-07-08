@@ -102,7 +102,7 @@ public class Supporter implements Entity{
                 ", userName= " + userName +
                 ", password= " + password +
                 ", Departments= " + departments +
-                "Status= "+ (isActive ? "Active" : "Inactive") +
+                ", Status= "+ (isActive ? "Active" : "Inactive") +
                 " }";
     }
 }

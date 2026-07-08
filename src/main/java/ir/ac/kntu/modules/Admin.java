@@ -60,8 +60,8 @@ public class Admin implements Entity{
                 ", lastName= " + lastName +
                 ", userName= " + userName +
                 ", password= " + password +
-                (this.getCreator().equals(Admin.NULL_ADMIN) ? ", Root Admin" : ", creator= " + creator) +
-                "Status= "+ (isActive ? "Active" : "Inactive") +
+                (this.getCreator().equals(Admin.NULL_ADMIN) ? ", Root Admin" : ", creator= " + creator.getUserName()) +
+                ", Status= "+ (isActive ? "Active" : "Inactive") +
                 " }";
     }
 

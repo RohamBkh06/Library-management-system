@@ -216,7 +216,7 @@ public abstract class NormalUser implements Entity {
 
     @Override
     public String toString() {
-        return "Role: User{ " + "firstName= " + firstName + ", lastName= " + lastName + ", id= " + id + ", email= " + email + ", phoneNum= " + phoneNum + "Status= "+ (isActive ? "Active" : "Inactive") + " }";
+        return "Role: User{ " + "firstName= " + firstName + ", lastName= " + lastName + ", id= " + id + ", email= " + email + ", phoneNum= " + phoneNum + ", Status= "+ (isActive ? "Active" : "Inactive") + " }";
     }
 
     @Override

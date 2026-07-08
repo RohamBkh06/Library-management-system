@@ -6,6 +6,7 @@ import ir.ac.kntu.util.Pagination;
 import ir.ac.kntu.util.ScannerWrapper;
 import ir.ac.kntu.util.SystemProperties;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -51,8 +52,8 @@ public final class AdminMenu {
     }
 
     private static void manageUsers(){
-        Pagination<NormalUser> pagination = new Pagination<>(LibraryManger.getInstance().getUserById().values().stream().toList());
         while (true){
+            Pagination<NormalUser> pagination = new Pagination<>(LibraryManger.getInstance().getUserById().values().stream().toList());
             ConsoleStyle.clearScreen();
             for (NormalUser user : pagination.getCurrentPage()){
                 System.out.println(ConsoleStyle.YELLOW + user + ConsoleStyle.RESET);
@@ -61,7 +62,7 @@ public final class AdminMenu {
                     "-----Page " + pagination.getCurrentPageNumber() + "/" + pagination.gerTotalPageNumber() + "-----\n" +
                     (pagination.hasNextPage() ? "N. Next Page    \n" : "") +
                     (pagination.hasPreviousPage() ? "P. Previous Page\n" : "") +
-                            "==================" +
+                            "==================\n" +
                             "1. Search User  \n" +
                             "2. Edit User    \n" +
                             "3. Remove User  \n" +
@@ -152,7 +153,7 @@ public final class AdminMenu {
                                 "2. Last Name      \n" +
                                 "3. Password       \n" +
                         (user.isActive() ? "4. Deactivate User\n" : "4. Activate User  \n") +
-                                "4. Back           \n" +
+                                "5. Back           \n" +
                         ConsoleStyle.RESET);
 
                 int select = ScannerWrapper.nextInt(SELECTION);
@@ -216,8 +217,8 @@ public final class AdminMenu {
     }
 
     private static void manageSupporters() {
-        Pagination<Supporter> pagination = new Pagination<>(LibraryManger.getInstance().getSupporterByPassword().values().stream().toList());
         while (true) {
+            Pagination<Supporter> pagination = new Pagination<>(LibraryManger.getInstance().getSupporterByPassword().values().stream().toList());
             ConsoleStyle.clearScreen();
             for (Supporter supporter : pagination.getCurrentPage()) {
                 System.out.println(ConsoleStyle.YELLOW + supporter + ConsoleStyle.RESET);
@@ -226,7 +227,7 @@ public final class AdminMenu {
                     "-------Page " + pagination.getCurrentPageNumber() + "/" + pagination.gerTotalPageNumber() + "-------\n" +
                     (pagination.hasNextPage() ? "N. Next Page        \n" : "") +
                     (pagination.hasPreviousPage() ? "P. Previous Page    \n" : "") +
-                            "======================" +
+                            "======================\n" +
                             "1. Add Supporter    \n" +
                             "2. Edit Supporter   \n" +
                             "3. Remove Supporter \n" +
@@ -336,7 +337,7 @@ public final class AdminMenu {
                 ConsoleStyle.clearScreen();
                 System.out.println(ConsoleStyle.YELLOW + supporter + ConsoleStyle.RESET + "\n");
                 System.out.println(ConsoleStyle.BG_WHITE + ConsoleStyle.BLUE +
-                        "Select the property you want to change:" +
+                        "Select the property you want to change:\n" +
                                 "1. First Name \n" +
                                 "2. Last Name  \n" +
                                 "3. Username   \n" +
@@ -455,8 +456,8 @@ public final class AdminMenu {
     }
 
     private static void manageAdmins(Admin admin){
-        Pagination<Admin> pagination = new Pagination<>(LibraryManger.getInstance().getAdminByPassword().values().stream().toList());
         while(true){
+            Pagination<Admin> pagination = new Pagination<>(LibraryManger.getInstance().getAdminByPassword().values().stream().toList());
             ConsoleStyle.clearScreen();
             for (Admin admin1 : pagination.getCurrentPage()){
                 System.out.println(ConsoleStyle.YELLOW + admin1 + ConsoleStyle.RESET);
@@ -491,13 +492,16 @@ public final class AdminMenu {
 
     private static void createAdmin(Admin creator){
         ConsoleStyle.clearScreen();
+        System.out.println(ConsoleStyle.BRIGHT_PURPLE + "Leave all fields empty to exit\n\n" + ConsoleStyle.RESET);
         try{
             String first = ScannerWrapper.nextLine("First Name: ");
             String last = ScannerWrapper.nextLine("Last Name: ");
             String username = ScannerWrapper.nextLine("Username: ");
             String password = ScannerWrapper.nextLine("Password: ");
             Admin admin = new Admin(first, last, username, password, creator);
-
+            if (first.isBlank() && last.isBlank() && username.isBlank() && password.isBlank()){
+                return;
+            }
             LibraryManger.getInstance().addAdmin(admin);
             System.out.println(ConsoleStyle.GREEN+ "Admin Created Successfully." +ConsoleStyle.RESET);
         }catch(Exception e){
@@ -544,6 +548,7 @@ public final class AdminMenu {
                 ConsoleStyle.clearScreen();
                 System.out.println(ConsoleStyle.YELLOW + target + ConsoleStyle.RESET + "\n");
                 System.out.println(ConsoleStyle.BG_WHITE + ConsoleStyle.BLUE +
+                        "Select the property you want to change:\n" +
                                 "1. First Name \n"+
                                 "2. Last Name  \n"+
                                 "3. Username   \n"+
@@ -587,6 +592,7 @@ public final class AdminMenu {
 
     private static void seeAllEntities(){
         while (true) {
+            ConsoleStyle.clearScreen();
             Pagination<Entity> pagination = new Pagination<>(LibraryManger.getInstance().getAllEntities());
             System.out.println("--------Page " + pagination.getCurrentPageNumber() + "/" + pagination.gerTotalPageNumber() + "--------");
             for (Entity entity : pagination.getCurrentPage()) {
@@ -596,9 +602,28 @@ public final class AdminMenu {
                     "==============================\n" + ConsoleStyle.BG_WHITE + ConsoleStyle.CYAN +
                             (pagination.hasNextPage() ? "N. Next Page        \n" : "") +
                             (pagination.hasPreviousPage() ? "P. Previous Page    \n" : "") +
+                        "------------------------------\n" +
+                            "Search By     \n" +
+                            "1. First Name \n" +
+                            "2. Last Name  \n" +
+                            "3. Password   \n" +
+                            "4. Back       \n" +
                             "E. Exit               " + ConsoleStyle.RESET);
             String select = ScannerWrapper.nextLine(SELECTION);
+            List<Entity> result = new ArrayList<>();
             switch (select.toLowerCase()) {
+                case "1" -> {
+                    String firstName = ScannerWrapper.nextLine("First Name: ");
+                    result = LibraryManger.getInstance().filteredSearch(entity -> entity.getFirstName().toLowerCase().contains(firstName.toLowerCase()));
+                }
+                case "2" -> {
+                    String lastName = ScannerWrapper.nextLine("Last Name: ");
+                    result = LibraryManger.getInstance().filteredSearch(entity -> entity.getLastName().toLowerCase().contains(lastName.toLowerCase()));
+                }
+                case "3" -> {
+                    String password = ScannerWrapper.nextLine("Password: ");
+                    result = LibraryManger.getInstance().filteredSearch(entity -> entity.getPassword().equals(password));
+                }
                 case "n" -> pagination.nextPage();
                 case "p" -> pagination.previousPage();
                 case "e" -> {
@@ -609,6 +634,14 @@ public final class AdminMenu {
                     ScannerWrapper.pause();
                 }
             }
+            if (result.isEmpty()){
+                System.out.println(ConsoleStyle.RED + "No Result Found." + ConsoleStyle.RESET);
+            } else {
+                for (Entity entity : result) {
+                    System.out.println(ConsoleStyle.YELLOW + entity + ConsoleStyle.RESET);
+                }
+            }
+            ScannerWrapper.pause();
         }
     }
 
