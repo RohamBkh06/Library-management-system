@@ -46,4 +46,9 @@ public final class Pagination<T> {
     public int gerTotalPageNumber(){
         return Math.ceilDiv(list.size(), pageSize);
     }
+
+    public void setItems(List<T> list) {
+        this.list = list;
+        this.currentPage = 0;
+    }
 }

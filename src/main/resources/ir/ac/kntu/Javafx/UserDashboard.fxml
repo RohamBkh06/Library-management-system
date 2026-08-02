@@ -15,7 +15,6 @@
       spacing="15"
       alignment="TOP_CENTER">
 
-    ```
     <padding>
         <Insets top="25"
                 right="30"
@@ -102,6 +101,5 @@
     <Button text="Logout"
             onAction="#handleLogout"
             prefWidth="200"/>
-    ```
 
 </VBox>

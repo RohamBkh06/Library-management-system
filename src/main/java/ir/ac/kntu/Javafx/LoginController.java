@@ -39,7 +39,6 @@ public class LoginController {
         String id = result.get().trim();
 
         if (id.isEmpty()) {
-
             showAlert(Alert.AlertType.WARNING, "Login", "Member ID cannot be empty.");
             return;
         }
@@ -52,8 +51,7 @@ public class LoginController {
 
             openUserDashboard(event, user);
 
-        } catch (IllegalArgumentException | IllegalStateException e
-        ) {
+        } catch (IllegalArgumentException | IllegalStateException e) {
 
             showAlert(Alert.AlertType.ERROR, "Login Failed", e.getMessage());
         }
