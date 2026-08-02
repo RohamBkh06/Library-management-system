@@ -166,4 +166,11 @@ public class LibraryManger implements Serializable {
         }
         return ans;
     }
+
+    public void reset(){
+        userById.clear();
+        supporterByPassword.clear();
+        ticketById.clear();
+        adminByPassword.clear();
+    }
 }

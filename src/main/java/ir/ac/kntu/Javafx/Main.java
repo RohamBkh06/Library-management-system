@@ -1,11 +1,16 @@
 package ir.ac.kntu.Javafx;
 
+import ir.ac.kntu.main.LibraryManger;
+import ir.ac.kntu.util.HtmlReportGenerator;
 import ir.ac.kntu.util.InitializerCheck;
 import ir.ac.kntu.util.SaveLoadManager;
+import ir.ac.kntu.util.TestDataSeeder;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class Main extends Application {
 
@@ -31,6 +36,11 @@ public class Main extends Application {
 
         stage.setOnCloseRequest(event -> {
             SaveLoadManager.save();
+            try {
+                HtmlReportGenerator.generateReport("report.html");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         });
 
         stage.show();
@@ -39,6 +49,5 @@ public class Main extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-
 
 }
