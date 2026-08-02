@@ -106,16 +106,7 @@ public class LoginController {
                             password
                     );
 
-            showAlert(
-                    Alert.AlertType.INFORMATION,
-                    "Login Successful",
-                    "Welcome Supporter!"
-            );
-
-            /*
-             * Supporter Dashboard
-             * will be opened here.
-             */
+            openSupporterDashboard(event, supporter);
 
         } catch (
                 IllegalArgumentException |
@@ -214,6 +205,28 @@ public class LoginController {
             UserDashboardController controller = loader.getController();
 
             controller.setCurrentUser(user);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (IOException e) {
+
+            showAlert(Alert.AlertType.ERROR, "Error", "Could not open User Dashboard.");
+        }
+    }
+
+    private void openSupporterDashboard(ActionEvent event, Supporter supporter) {
+        try {
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ir/ac/kntu/Javafx/SupporterDashboard.fxml"));
+
+            Parent root = loader.load();
+
+            SupporterDashboardController controller = loader.getController();
+
+            controller.setSupporter(supporter);
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 

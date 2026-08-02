@@ -13,11 +13,13 @@ public class Fine implements Serializable {
 
     private final String id;
     private final Borrowed borrowedItem;
+    private LocalDate createdDate;
     private LocalDate paymentDate;
 
     public Fine(Borrowed borrowedItem){
         this.borrowedItem = borrowedItem;
         this.id = IdGenerator.generateFineId();
+        this.createdDate = LocalDate.now();
 
     }
 
@@ -38,6 +40,10 @@ public class Fine implements Serializable {
             throw new IllegalStateException("fine already paid");
         }
         this.paymentDate = LocalDate.now();
+    }
+
+    public LocalDate getCreatedDate() {
+        return createdDate;
     }
 
     public LocalDate getPaymentDate() {

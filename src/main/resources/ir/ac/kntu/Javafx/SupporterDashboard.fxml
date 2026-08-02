@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+
+<?import javafx.scene.chart.CategoryAxis?>
+
+<?import javafx.scene.chart.LineChart?>
+
+<?import javafx.scene.chart.NumberAxis?>
+
+<?import javafx.scene.control.Button?>
+
+<?import javafx.scene.control.Label?>
+
+<?import javafx.scene.layout.BorderPane?>
+
+<?import javafx.scene.layout.GridPane?>
+
+<?import javafx.scene.layout.HBox?>
+
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="ir.ac.kntu.Javafx.SupporterDashboardController"
+            prefWidth="1000.0"
+            prefHeight="650.0">
+
+    <top>
+        <VBox spacing="10.0"
+              style="-fx-padding: 20;">
+
+            <Label fx:id="welcomeLabel"
+                   text="Welcome Supporter"
+                   style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+
+            <Label text="Supporter Dashboard"
+                   style="-fx-font-size: 16px;"/>
+
+        </VBox>
+    </top>
+
+
+    <center>
+        <VBox spacing="20.0"
+              style="-fx-padding: 20;">
+
+            <!-- Statistics -->
+
+            <GridPane hgap="30.0"
+                      vgap="10.0">
+
+                <VBox spacing="5.0"
+                      GridPane.columnIndex="0">
+
+                    <Label text="Open Requests"
+                           style="-fx-font-size: 16px;"/>
+
+                    <Label fx:id="openRequestsLabel"
+                           text="0"
+                           style="-fx-font-size: 28px; -fx-font-weight: bold;"/>
+
+                </VBox>
+
+
+                <VBox spacing="5.0"
+                      GridPane.columnIndex="1">
+
+                    <Label text="Requests Handled Today"
+                           style="-fx-font-size: 16px;"/>
+
+                    <Label fx:id="handledTodayLabel"
+                           text="0"
+                           style="-fx-font-size: 28px; -fx-font-weight: bold;"/>
+
+                </VBox>
+
+            </GridPane>
+
+
+            <!-- Weekly Chart -->
+
+            <VBox spacing="10.0">
+
+                <Label text="Request Trend - Last 7 Days"
+                       style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+
+                <LineChart fx:id="weeklyRequestChart"
+                           animated="false"
+                           createSymbols="true"
+                           prefHeight="300.0">
+
+                    <xAxis>
+                        <CategoryAxis fx:id="dateAxis"
+                                      label="Date"/>
+                    </xAxis>
+
+                    <yAxis>
+                        <NumberAxis fx:id="requestCountAxis"
+                                    label="Requests"
+                                    forceZeroInRange="true"/>
+                    </yAxis>
+
+                </LineChart>
+
+            </VBox>
+
+        </VBox>
+    </center>
+
+
+    <bottom>
+
+        <HBox spacing="10.0"
+              style="-fx-padding: 20;">
+
+            <Button text="Users"
+                    fx:id="usersButton"
+                    onAction="#handleUsers"/>
+
+            <Button text="Recent Borrows"
+                    fx:id="recentBorrowsButton"
+                    onAction="#handleRecentBorrows"/>
+
+            <Button text="Fine Management"
+                    fx:id="fineManagementButton"
+                    onAction="#handleFineManagement"/>
+
+            <Button text="Add Item"
+                    fx:id="addItemButton"
+                    onAction="#handleAddItem"/>
+
+            <Button text="Support Requests"
+                    fx:id="supportRequestsButton"
+                    onAction="#handleSupportRequests"/>
+
+            <Button text="Logout"
+                    fx:id="logoutButton"
+                    onAction="#handleLogout"/>
+
+        </HBox>
+
+    </bottom>
+
+</BorderPane>

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+
+<?import javafx.scene.control.Button?>
+
+<?import javafx.scene.control.DatePicker?>
+
+<?import javafx.scene.control.Label?>
+
+<?import javafx.scene.control.TableColumn?>
+
+<?import javafx.scene.control.TableView?>
+
+<?import javafx.scene.control.TextField?>
+
+<?import javafx.scene.layout.BorderPane?>
+
+<?import javafx.scene.layout.HBox?>
+
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="ir.ac.kntu.Javafx.FineManagementController"
+            prefWidth="1000.0"
+            prefHeight="650.0">
+
+
+    <top>
+        <VBox spacing="10.0"
+              style="-fx-padding: 20;">
+
+            <Label text="Fine Management"
+                   style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+
+            <Label text="Users with unpaid fines"
+                   style="-fx-font-size: 15px;"/>
+
+        </VBox>
+    </top>
+
+
+    <center>
+        <VBox spacing="15.0"
+              style="-fx-padding: 20;">
+
+            <!-- Filters -->
+
+            <HBox spacing="10.0">
+
+                <Label text="From:"
+                       style="-fx-padding: 7 0 0 0;"/>
+
+                <DatePicker fx:id="fromDatePicker"/>
+
+                <Label text="To:"
+                       style="-fx-padding: 7 0 0 0;"/>
+
+                <DatePicker fx:id="toDatePicker"/>
+
+                <Button text="Filter"
+                        onAction="#handleFilter"/>
+
+                <Button text="Clear"
+                        onAction="#handleClearFilter"/>
+
+            </HBox>
+
+
+            <!-- Sorting -->
+
+            <HBox spacing="10.0">
+
+                <Label text="Sort by debt:"
+                       style="-fx-padding: 7 0 0 0;"/>
+
+                <Button text="Lowest to Highest"
+                        onAction="#handleSortAscending"/>
+
+                <Button text="Highest to Lowest"
+                        onAction="#handleSortDescending"/>
+
+            </HBox>
+
+
+            <!-- Fine Table -->
+
+            <TableView fx:id="fineTable"
+                       prefHeight="400.0">
+
+                <columns>
+
+                    <TableColumn fx:id="userIdColumn"
+                                 text="User ID"
+                                 prefWidth="150.0"/>
+
+                    <TableColumn fx:id="userNameColumn"
+                                 text="User Name"
+                                 prefWidth="200.0"/>
+
+                    <TableColumn fx:id="fineCountColumn"
+                                 text="Fine Count"
+                                 prefWidth="120.0"/>
+
+                    <TableColumn fx:id="totalDebtColumn"
+                                 text="Total Debt"
+                                 prefWidth="150.0"/>
+
+                    <TableColumn fx:id="lastFineDateColumn"
+                                 text="Last Fine Date"
+                                 prefWidth="180.0"/>
+
+                </columns>
+
+            </TableView>
+
+
+            <!-- Pagination -->
+
+            <HBox spacing="15.0">
+
+                <Button text="Previous"
+                        onAction="#handlePreviousPage"/>
+
+                <Label fx:id="pageLabel"
+                       text="Page 1 / 1"
+                       style="-fx-padding: 7 0 0 0;"/>
+
+                <Button text="Next"
+                        onAction="#handleNextPage"/>
+
+            </HBox>
+
+        </VBox>
+    </center>
+
+
+    <bottom>
+
+        <HBox spacing="10.0"
+              style="-fx-padding: 20;">
+
+            <Button text="Back"
+                    onAction="#handleBack"/>
+
+        </HBox>
+
+    </bottom>
+
+
+</BorderPane>

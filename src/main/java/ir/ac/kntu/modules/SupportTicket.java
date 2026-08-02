@@ -3,6 +3,7 @@ package ir.ac.kntu.modules;
 import ir.ac.kntu.util.IdGenerator;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 public class SupportTicket implements Serializable {
 
@@ -14,11 +15,15 @@ public class SupportTicket implements Serializable {
     private String message;
     private boolean isAnswered;
     private String answer;
+    private LocalDate createdDate;
+    private LocalDate answeredDate;
 
     public SupportTicket(NormalUser user, Department department, String message){
         this.user = user;
         this.message = message;
         this.department = department;
+        this.createdDate = LocalDate.now();
+        this.answeredDate = null;
         isAnswered = false;
         this.id = IdGenerator.generateTicketId();
         this.answer = "No answers has been submitted by the supporters yet.";
@@ -27,6 +32,7 @@ public class SupportTicket implements Serializable {
     public void setAnswer(String answer){
         this.answer = answer;
         isAnswered = true;
+        this.answeredDate = LocalDate.now();
     }
 
     public NormalUser getUser() {
@@ -51,6 +57,14 @@ public class SupportTicket implements Serializable {
 
     public String getAnswer() {
         return answer;
+    }
+
+    public LocalDate getCreatedDate() {
+        return createdDate;
+    }
+
+    public LocalDate getAnsweredDate() {
+        return answeredDate;
     }
 
     @Override
