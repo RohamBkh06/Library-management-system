@@ -173,4 +173,16 @@ public class LibraryManger implements Serializable {
         ticketById.clear();
         adminByPassword.clear();
     }
+
+    public void updateSupporterPassword(Supporter supporter, String newPassword) {
+        supporterByPassword.remove(supporter.getPassword(), supporter);
+        supporter.setPassword(newPassword);
+        supporterByPassword.put(newPassword, supporter);
+    }
+
+    public void updateAdminPassword(Admin admin, String newPassword) {
+        adminByPassword.remove(admin.getPassword(), admin);
+        admin.setPassword(newPassword);
+        adminByPassword.put(newPassword, admin);
+    }
 }

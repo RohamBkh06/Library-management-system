@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+
+<?import javafx.scene.chart.CategoryAxis?>
+
+<?import javafx.scene.chart.LineChart?>
+
+<?import javafx.scene.chart.NumberAxis?>
+
+<?import javafx.scene.control.Button?>
+
+<?import javafx.scene.control.Label?>
+
+<?import javafx.scene.control.ListView?>
+
+<?import javafx.scene.layout.BorderPane?>
+
+<?import javafx.scene.layout.GridPane?>
+
+<?import javafx.scene.layout.HBox?>
+
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="ir.ac.kntu.Javafx.AdminDashboardController">
+
+
+    <top>
+        <VBox spacing="10"
+              style="-fx-padding: 20;">
+
+            <Label fx:id="welcomeLabel"
+                   text="Welcome Admin"
+                   style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+
+            <Label text="Library Management System - Admin Dashboard"
+                   style="-fx-font-size: 16px;"/>
+
+        </VBox>
+    </top>
+
+    <center>
+        <VBox spacing="20">
+
+            <padding>
+                <Insets top="10"
+                        right="20"
+                        bottom="20"
+                        left="20"/>
+            </padding>
+
+            <!-- STATISTICS -->
+
+            <GridPane hgap="15"
+                      vgap="15">
+
+                <VBox GridPane.columnIndex="0"
+                      GridPane.rowIndex="0"
+                      spacing="10"
+                      alignment="CENTER"
+                      style="-fx-border-color: gray;
+                         -fx-border-radius: 5;
+                         -fx-padding: 20;
+                         -fx-background-radius: 5;">
+
+                    <Label text="Total Users"
+                           style="-fx-font-size: 16px;"/>
+
+                    <Label fx:id="totalUsersLabel"
+                           text="0"
+                           style="-fx-font-size: 28px;
+                              -fx-font-weight: bold;"/>
+
+                </VBox>
+
+                <VBox GridPane.columnIndex="1"
+                      GridPane.rowIndex="0"
+                      spacing="10"
+                      alignment="CENTER"
+                      style="-fx-border-color: gray;
+                         -fx-border-radius: 5;
+                         -fx-padding: 20;
+                         -fx-background-radius: 5;">
+
+                    <Label text="Library Items"
+                           style="-fx-font-size: 16px;"/>
+
+                    <Label fx:id="totalItemsLabel"
+                           text="0"
+                           style="-fx-font-size: 28px;
+                              -fx-font-weight: bold;"/>
+
+                </VBox>
+
+                <VBox GridPane.columnIndex="2"
+                      GridPane.rowIndex="0"
+                      spacing="10"
+                      alignment="CENTER"
+                      style="-fx-border-color: gray;
+                         -fx-border-radius: 5;
+                         -fx-padding: 20;
+                         -fx-background-radius: 5;">
+
+                    <Label text="Fine Revenue"
+                           style="-fx-font-size: 16px;"/>
+
+                    <Label fx:id="fineRevenueLabel"
+                           text="0"
+                           style="-fx-font-size: 28px;
+                              -fx-font-weight: bold;"/>
+
+                </VBox>
+
+            </GridPane>
+
+            <!-- POPULAR ITEMS + ACTIVITY CHART -->
+
+            <HBox spacing="20">
+
+                <!-- POPULAR ITEMS -->
+
+                <VBox spacing="10"
+                      prefWidth="300">
+
+                    <Label text="Most Popular Items"
+                           style="-fx-font-size: 18px;
+                              -fx-font-weight: bold;"/>
+
+                    <ListView fx:id="popularItemsListView"
+                              prefHeight="200"/>
+
+                </VBox>
+
+                <!-- ACTIVITY CHART -->
+
+                <VBox spacing="10"
+                      HBox.hgrow="ALWAYS">
+
+                    <Label text="System Activity - Last 7 Days"
+                           style="-fx-font-size: 18px;
+                              -fx-font-weight: bold;"/>
+
+                    <LineChart fx:id="activityChart"
+                               VBox.vgrow="ALWAYS">
+
+                        <xAxis>
+                            <CategoryAxis label="Date"/>
+                        </xAxis>
+
+                        <yAxis>
+                            <NumberAxis label="Borrowed Items"/>
+                        </yAxis>
+
+                    </LineChart>
+
+                </VBox>
+
+            </HBox>
+
+            <!-- ADMIN OPTIONS -->
+
+            <HBox spacing="10">
+
+                <Button text="Manage Users"
+                        onAction="#handleManageUsers"/>
+
+                <Button text="Manage Supporters"
+                        onAction="#handleManageSupporters"/>
+
+                <Button text="Manage Admins"
+                        onAction="#handleManageAdmins"/>
+
+                <Button text="All System Users"
+                        onAction="#handleAllSystemUsers"/>
+
+                <Button text="System Settings"
+                        onAction="#handleSystemSettings"/>
+
+                <Button text="Logout"
+                        onAction="#handleLogout"/>
+
+            </HBox>
+
+        </VBox>
+    </center>
+
+
+</BorderPane>

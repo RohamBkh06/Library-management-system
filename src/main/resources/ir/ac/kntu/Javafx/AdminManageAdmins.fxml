@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+
+<?import javafx.scene.control.Button?>
+
+<?import javafx.scene.control.Label?>
+
+<?import javafx.scene.control.ListView?>
+
+<?import javafx.scene.control.TextField?>
+
+<?import javafx.scene.layout.BorderPane?>
+
+<?import javafx.scene.layout.GridPane?>
+
+<?import javafx.scene.layout.HBox?>
+
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="ir.ac.kntu.Javafx.AdminManageAdminsController">
+
+
+    <top>
+        <VBox spacing="10"
+              style="-fx-padding: 20;">
+
+            <Label text="Manage Admins"
+                   style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+
+            <Label fx:id="pageLabel"
+                   text="Page 1 / 1"
+                   style="-fx-font-size: 14px;"/>
+
+        </VBox>
+    </top>
+
+
+    <center>
+        <VBox spacing="15">
+
+            <padding>
+                <Insets top="10"
+                        right="20"
+                        bottom="20"
+                        left="20"/>
+            </padding>
+
+
+            <!-- ADMIN LIST -->
+
+            <Label text="System Administrators"
+                   style="-fx-font-size: 18px;
+                      -fx-font-weight: bold;"/>
+
+            <ListView fx:id="adminListView"
+                      prefHeight="250"/>
+
+
+            <!-- PAGINATION -->
+
+            <HBox spacing="10"
+                  alignment="CENTER">
+
+                <Button fx:id="previousButton"
+                        text="Previous"
+                        onAction="#handlePreviousPage"/>
+
+                <Button fx:id="nextButton"
+                        text="Next"
+                        onAction="#handleNextPage"/>
+
+            </HBox>
+
+
+            <!-- ACTION BUTTONS -->
+
+            <HBox spacing="10">
+
+                <Button text="Create Admin"
+                        onAction="#handleCreateAdmin"/>
+
+                <Button text="Edit Admin"
+                        onAction="#handleEditAdmin"/>
+
+                <Button text="Remove Admin"
+                        onAction="#handleRemoveAdmin"/>
+
+                <Button text="Back"
+                        onAction="#handleBack"/>
+
+            </HBox>
+
+
+            <!-- CREATE / EDIT FORM -->
+
+            <VBox spacing="10">
+
+                <Label fx:id="formTitleLabel"
+                       text="Admin Information"
+                       style="-fx-font-size: 18px;
+                          -fx-font-weight: bold;"/>
+
+
+                <GridPane hgap="10"
+                          vgap="10">
+
+                    <Label text="First Name:"
+                           GridPane.columnIndex="0"
+                           GridPane.rowIndex="0"/>
+
+                    <TextField fx:id="firstNameField"
+                               GridPane.columnIndex="1"
+                               GridPane.rowIndex="0"/>
+
+
+                    <Label text="Last Name:"
+                           GridPane.columnIndex="0"
+                           GridPane.rowIndex="1"/>
+
+                    <TextField fx:id="lastNameField"
+                               GridPane.columnIndex="1"
+                               GridPane.rowIndex="1"/>
+
+
+                    <Label text="Username:"
+                           GridPane.columnIndex="0"
+                           GridPane.rowIndex="2"/>
+
+                    <TextField fx:id="usernameField"
+                               GridPane.columnIndex="1"
+                               GridPane.rowIndex="2"/>
+
+
+                    <Label text="Password:"
+                           GridPane.columnIndex="0"
+                           GridPane.rowIndex="3"/>
+
+                    <TextField fx:id="passwordField"
+                               GridPane.columnIndex="1"
+                               GridPane.rowIndex="3"/>
+
+                </GridPane>
+
+
+                <HBox spacing="10">
+
+                    <Button fx:id="saveButton"
+                            text="Save"
+                            onAction="#handleSave"/>
+
+                    <Button text="Clear"
+                            onAction="#handleClear"/>
+
+                </HBox>
+
+            </VBox>
+
+        </VBox>
+    </center>
+
+
+</BorderPane>

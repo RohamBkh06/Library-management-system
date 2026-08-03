@@ -165,21 +165,10 @@ public class LoginController {
             LibraryManger manager =
                     LibraryManger.getInstance();
 
-            Admin admin =
-                    manager.loginAdmin(
-                            password
-                    );
+            Admin admin = manager.loginAdmin(password);
 
-            showAlert(
-                    Alert.AlertType.INFORMATION,
-                    "Login Successful",
-                    "Welcome Admin!"
-            );
+            openAdminDashboard(event, admin);
 
-            /*
-             * Admin Dashboard
-             * will be opened here.
-             */
 
         } catch (
                 IllegalArgumentException |
@@ -235,7 +224,31 @@ public class LoginController {
 
         } catch (IOException e) {
 
-            showAlert(Alert.AlertType.ERROR, "Error", "Could not open User Dashboard.");
+            showAlert(Alert.AlertType.ERROR, "Error", "Could not open Supporter Dashboard.");
+        }
+    }
+
+    private void openAdminDashboard(ActionEvent event, Admin admin) {
+        try {
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ir/ac/kntu/Javafx/AdminDashboard.fxml"));
+
+            Parent root = loader.load();
+
+            AdminDashboardController controller = loader.getController();
+
+            controller.setAdmin(admin);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (IOException e) {
+
+            showAlert(Alert.AlertType.ERROR, "Error", "Could not open Admin Dashboard.");
+            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
     }
 

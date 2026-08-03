@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+
+<?import javafx.scene.control.Button?>
+
+<?import javafx.scene.control.ListView?>
+
+<?import javafx.scene.control.Label?>
+
+<?import javafx.scene.layout.BorderPane?>
+
+<?import javafx.scene.layout.HBox?>
+
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="ir.ac.kntu.Javafx.AdminManageSupportersController">
+
+
+    <top>
+        <VBox spacing="10">
+
+            <padding>
+                <Insets top="20"
+                        right="20"
+                        bottom="20"
+                        left="20"/>
+            </padding>
+
+            <Label text="Manage Supporters"
+                   style="-fx-font-size: 24px;
+                      -fx-font-weight: bold;"/>
+
+            <Label fx:id="adminLabel"
+                   text="Admin"/>
+
+        </VBox>
+    </top>
+
+
+    <center>
+
+        <VBox spacing="10">
+
+            <padding>
+                <Insets top="10"
+                        right="20"
+                        bottom="10"
+                        left="20"/>
+            </padding>
+
+            <Label text="Supporters"
+                   style="-fx-font-size: 18px;
+                      -fx-font-weight: bold;"/>
+
+            <ListView fx:id="supportersListView"
+                      VBox.vgrow="ALWAYS"/>
+
+        </VBox>
+
+    </center>
+
+
+    <bottom>
+
+        <VBox spacing="10">
+
+            <padding>
+                <Insets top="10"
+                        right="20"
+                        bottom="20"
+                        left="20"/>
+            </padding>
+
+
+            <!-- PAGINATION -->
+
+            <HBox spacing="10"
+                  alignment="CENTER">
+
+                <Button fx:id="previousButton"
+                        text="Previous"
+                        onAction="#handlePreviousPage"/>
+
+                <Label fx:id="pageLabel"
+                       text="Page 1 / 1"/>
+
+                <Button fx:id="nextButton"
+                        text="Next"
+                        onAction="#handleNextPage"/>
+
+            </HBox>
+
+
+            <!-- OPERATIONS -->
+
+            <HBox spacing="10"
+                  alignment="CENTER">
+
+                <Button text="Add Supporter"
+                        onAction="#handleAddSupporter"/>
+
+                <Button text="Edit Supporter"
+                        onAction="#handleEditSupporter"/>
+
+                <Button text="Remove Supporter"
+                        onAction="#handleRemoveSupporter"/>
+
+                <Button text="Departments"
+                        onAction="#handleDepartments"/>
+
+                <Button text="Back"
+                        onAction="#handleBack"/>
+
+            </HBox>
+
+        </VBox>
+
+    </bottom>
+
+
+</BorderPane>
