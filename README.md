@@ -1,30 +1,30 @@
-# Project Name
+# Library Management System
 
-<ul>
-<li>
-clone in your computer: 
+A Java-based Library Management System developed as a university project.
 
-```
-git clone your_repo_url
-cd your_repo_dir
-```
-</li>
+## Technologies
 
-<li>
-run tests from terminal:
+* Java
+* JavaFX & FXML
+* Gradle
+* JUnit
+* Serialization
 
-```
-./gradlew clean test
-```
-</li>
+## Features
 
-<li>
-push changes to the repository:
+* User management for guests, students, and faculty
+* Book, magazine, e-book, and audiobook management
+* Borrowing and reservation system
+* Fine management
+* Support request management
+* Admin and supporter dashboards
+* Data persistence using serialization
+* CLI and JavaFX-based GUI
 
-```
-git add . 
-git commit -m "commit message"
-git push
-```
-</li>
-</ul>
+## Project Structure
+
+The project follows an object-oriented design and uses several design patterns, including Singleton, with separate components for users, library items, management, and the graphical interface.
+
+## Note
+
+This project was developed as part of a university coursework project.
